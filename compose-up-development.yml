@@ -1,0 +1,109 @@
+version: '2'
+
+services:
+  backup:
+    container_name: backup
+    image: mittax/lemp-backup
+    volumes_from:
+      - wwwdata
+      - nginx
+      - mariadb
+      - php56
+      - php70
+    volumes:
+      - ./data/backups:/var/backups
+    restart: always
+    networks:
+        - development
+  wwwdata:
+    container_name: wwwdata
+    image: mittax/lemp-wwwdata
+    volumes:
+      - ./data/www:/var/www
+    restart: always
+    networks:
+        - development
+  nginx:
+    container_name: nginx
+    image: mittax/lemp-nginx
+    volumes:
+      - ./data/config/nginx:/etc/nginx
+      - ./data/log/nginx:/var/log/nginx
+    volumes_from:
+      - wwwdata
+    ports:
+      - "8087:80"
+      - "4434:443"
+    networks:
+      - development  
+    restart: always
+  php56:
+    container_name: php56
+    image: mittax/lemp-php56
+    environment:
+      PHP_ENV: 'development'
+      PHP_APCU_ENABLED: 'false'
+      PHP_XDEBUG_ENABLED: 'false'
+    volumes:
+      - ./data/config/php/pool56/:/etc/php5/fpm/pool.d
+      - ./data/config/php/ini56/development.ini:/etc/php5/mods-available/development.ini
+      - ./data/config/php/ini56/production.ini:/etc/php5/mods-available/production.ini
+      - ./data/log/php56:/var/log/php
+    volumes_from:
+      - wwwdata
+    restart: always
+    networks:
+      - development
+  php70:
+    container_name: php70
+    image: mittax/lemp-php70
+    environment:
+      PHP_ENV: 'development'
+      PHP_APCU_ENABLED: 'false'
+      PHP_XDEBUG_ENABLED: 'false'
+    volumes:
+      - ./data/config/php/pool70/:/etc/php/7.0/fpm/pool.d
+      - ./data/config/php/ini70/development.ini:/etc/php/mods-available/development.ini
+      - ./data/config/php/ini70/production.ini:/etc/php/mods-available/production.ini
+      - ./data/log/php70:/var/log/php
+    volumes_from:
+      - wwwdata
+    restart: always
+    networks:
+      - development
+  mariadb:
+    container_name: mariadb
+    image: mittax/lemp-mariadb
+    volumes:
+      - ./data/config/mariadb/my.cnf:/etc/mysql/my.cnf
+      - ./data/log/mariadb:/var/log/mysql
+      - ./data/mariadb:/var/lib/mysql
+    environment:
+      DB_ADMIN_PASS: pass
+    ports:
+      - "3308:3306"
+    restart: always
+    networks:
+      - development
+  redis:
+    container_name: redis
+    image: redis
+    volumes:
+      - ./data/config/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - "6379:6379"
+    restart: always
+    networks:
+      - development
+
+  rabbit1:
+    container_name: rabbitmq
+    image: mittax/lemp-rabbitmq
+    hostname: rabbit1
+    environment:
+      - ERLANG_COOKIE=abcdefg
+      
+networks:
+  development:
+    # Use a custom driver
+    driver: bridge

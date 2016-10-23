@@ -1,3 +1,0 @@
-[submodule "docker-lemp-stack"]
-	path = app
-url = https://github.com/pboethig/docker-lemp-stack.git
