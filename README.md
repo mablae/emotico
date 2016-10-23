@@ -1,8 +1,10 @@
-# Docker lemp stack with multiple PHP versions
+# Emotico - A SMS / MMS / Whatsapp  Messanger Project
 
 ## What is this ?
 
-This is a development or(/and) production environment for PHP built in seperate docker containers, managed with docker-compose. The basic setup contains a LEMP stack (Linux, Nginx, MySQL and PHP) 
+This is a development or(/and) production environment for PHP built in seperate docker containers, managed with docker-compose. The basic setup contains a LEMP stack (Linux, Nginx, MySQL, RabbitMQ and PHP)
+
+On this LAMP Stack a Symfony 3 App is living
 
 (MySQL is replaced by a MariaDB instance which is technically the same as MySQL, but with extra features and promises too be faster than MySQL)
 
