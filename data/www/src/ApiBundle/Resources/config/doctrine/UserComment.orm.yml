@@ -1,0 +1,23 @@
+# src/ApiBundle/Resources/config/doctrine/User.orm.yml
+ApiBundle\Entity\UserComment:
+    type:  entity
+    table: usercomments
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+      body:
+        type: string
+        length: 255
+        column: description
+        nullable: true
+
+    manyToOne:
+      user:
+        targetEntity: User
+        inversedBy: comments
+        joinColumn:
+          name: user_id
+          referencedColumnName: id
