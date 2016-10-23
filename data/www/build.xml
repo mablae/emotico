@@ -1,0 +1,310 @@
+<project name="emotico" default="dist" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+  <description>
+    simple example build file
+  </description>
+  <!-- set global properties for this build -->
+  <property name="src" location="src"/>
+  <property name="build" location="build"/>
+  <property name="dist" location="dist"/>
+
+  
+<!-- #######################################################################################
+Install ivy
+-->
+
+  <property name="ivy.install.version" value="2.2.0" />
+    <condition property="ivy.home" value="${env.IVY_HOME}">
+      <isset property="env.IVY_HOME" />
+    </condition>
+    <property name="ivy.home" value="${user.home}/.ant" />
+    <property name="ivy.jar.dir" value="${ivy.home}/lib" />
+    <property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar" />
+
+    <target name="download-ivy" unless="offline">
+
+        <mkdir dir="${ivy.jar.dir}"/>
+        <!-- download Ivy from web site so that it can be used even without any special installation -->
+        <get src="https://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar" 
+             dest="${ivy.jar.file}" usetimestamp="true"/>
+    </target>
+
+    <target name="init-ivy" depends="download-ivy">
+      <!-- try to load ivy here from ivy home, in case the user has not already dropped
+              it into ant's lib dir (note that the latter copy will always take precedence).
+              We will not fail as long as local lib dir exists (it may be empty) and
+              ivy is in at least one of ant's lib dir or the local lib dir. -->
+        <path id="ivy.lib.path">
+            <fileset dir="${ivy.jar.dir}" includes="*.jar"/>
+
+        </path>
+        <taskdef resource="org/apache/ivy/ant/antlib.xml"
+                 uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
+    </target>
+
+
+
+
+<!-- #######################################################################################
+running default task dist
+-->
+<target name="dist">
+  <echo>start</echo>
+      <antcall target="init" />
+      <antcall target="test" />
+      <antcall target="report" />
+      <antcall target="clean-cache" />
+</target>
+
+<!-- #######################################################################################
+Initial task.
+-->
+<target name="init">
+<echo>Initializing and linking ivysettings.xml</echo>
+    <antcall target="create-dirs" />
+    <antcall target="resolve" />	
+    <antcall target="clean" />
+</target>
+
+<!-- #######################################################################################
+Run test task.
+-->
+<target name="test" depends="Lint, PHPUnit"></target>
+
+<!-- #######################################################################################
+Run quality analizing and reporting tasks
+-->
+<target name="report" depends="phploc,phpcs,pdepend,phpmd,phpcpd,phpdox"></target>
+
+<!-- #######################################################################################
+Create all needed local direectories
+-->
+<target name="create-dirs">
+<echo>creating local directories</echo>
+<tstamp/>
+    <mkdir dir="${build}"/>
+    <mkdir dir="${basedir}/build/api"/>
+    <mkdir dir="${basedir}/build/api/html"/>
+    <mkdir dir="${basedir}/build/coverage"/>
+    <mkdir dir="${basedir}/build/logs"/>
+    <mkdir dir="${basedir}/build/logs/html"/>
+    <mkdir dir="${basedir}/build/pdepend"/>
+    <mkdir dir="${basedir}/build/phpdox"/>
+    <mkdir dir="${basedir}/.ant/lib"/>
+<mkdir dir="target/modules"/>
+</target>
+
+<!-- #######################################################################################
+Resolves dependencies defined in ivy.xml
+-->
+<target name="resolve" depends="download-ivy">
+  <echo>Downloading dependencies defined in ivy.xml</echo>
+    <mkdir dir="target/buildlibs"/>
+    <ivy:retrieve pattern="target/buildlibs/[artifact].[ext]" symlink="true" type="jar"/>
+</target>
+
+
+<!-- #######################################################################################
+Do your stuff to cleanup before running further task 
+-->
+<target name="clean" description="Cleanup build directory">
+    <echo>Implement your cleaning strategy</echo>
+     <delete dir="${basedir}/target"/>
+</target>
+
+
+<!-- #######################################################################################
+Check code for syntax errors
+-->
+<target name="Lint" description="Lint Check (Syntax error check)">
+  <echo>Checking code for syntax errors with lint</echo>
+    <apply executable="php" failonerror="true">
+      <arg value="-l" />
+      <fileset dir="${basedir}/src">
+          <include name="**/*.php"/>
+      </fileset>
+    </apply>   
+  </target>
+
+<!-- #######################################################################################
+Analyze php code
+-->
+
+  <target name="phploc" description="messure projectsize with PHPLOC">
+  <echo>Messure code with phploc</echo>
+      <exec osfamily="unix" executable="${basedir}/vendor/bin/phploc">
+          <arg value="--count-tests" />
+          <arg value="--log-csv" />
+          <arg value="${basedir}/build/logs/phploc.csv" />
+          <arg path="${basedir}/src" />
+      </exec>
+
+      <exec osfamily="windows" executable="${basedir}/vendor/bin/phploc.bat">
+      <arg value="--count-tests" />
+      <arg value="--log-csv" />
+      <arg value="${basedir}/build/logs/phploc.csv" />
+      <arg path="${basedir}/src" />
+    </exec>
+  </target>
+
+
+<!-- #######################################################################################
+Check code style guides
+-->
+  <target name="phpcs" description="checks missing codestyles">
+  <echo>Checking code breaking style guoide rules with codesniffer</echo>
+    <exec osfamily="windows" executable="${basedir}/vendor/bin/phpcs.bat">
+      <arg value="--report=checkstyle" />
+      <arg value="--report-file=${basedir}/build/logs/checkstyle.xml" />
+      <arg value="--standard=${basedir}/build/phpcs/phpcs_ruleset.xml" />
+      <arg path="${basedir}/src" />
+    </exec>
+
+      <exec osfamily="unix" executable="${basedir}/vendor/bin/phpcs">
+          <arg value="--report=checkstyle" />
+          <arg value="--report-file=${basedir}/build/logs/checkstyle.xml" />
+          <arg value="--standard=${basedir}/build/phpcs/phpcs_ruleset.xml" />
+          <arg path="${basedir}/src" />
+      </exec>
+  </target>
+
+<!-- #######################################################################################
+Check code for dependencies
+-->
+  <target name="pdepend" description="checks dependencies">
+  <echo>Checking code dependencies</echo>
+    <exec osfamily="windows" executable="${basedir}/vendor/bin/pdepend.bat">
+      <arg value="--jdepend-xml=${basedir}/build/logs/jdepend.xml" />
+      <arg value="--jdepend-chart=${basedir}/build/pdepend/dependencies.svg" />
+      <arg value="--overview-pyramid=${basedir}/build/pdepend/overview-pyramide.svg" />
+      <arg path="${basedir}/src" />
+    </exec>
+      <exec osfamily="unix" executable="${basedir}/vendor/bin/pdepend">
+          <arg value="--jdepend-xml=${basedir}/build/logs/jdepend.xml" />
+          <arg value="--jdepend-chart=${basedir}/build/pdepend/dependencies.svg" />
+          <arg value="--overview-pyramid=${basedir}/build/pdepend/overview-pyramide.svg" />
+          <arg path="${basedir}/src" />
+      </exec>
+  </target>
+
+<!-- #######################################################################################
+Check code codemess
+-->
+
+  <target name="phpmd" description="checks codemess">
+  <echo>Checking for codemess</echo>
+    <exec osfamily="windows"  executable="${basedir}/vendor/bin/phpmd.bat">
+      <arg path="${basedir}/src" />
+      <arg value="xml" />
+      <arg value="${basedir}/build/phpmd/phpmd_ruleset.xml" />
+      <arg value="--overview-pyramid=${basedir}/build/pdepend/overview-pyramide.svg" />
+    </exec>
+
+      <exec osfamily="unix"  executable="${basedir}/vendor/bin/phpmd">
+          <arg path="${basedir}/src" />
+          <arg value="xml" />
+          <arg value="${basedir}/build/phpmd/phpmd_ruleset.xml" />
+          <arg value="--overview-pyramid=${basedir}/build/pdepend/overview-pyramide.svg" />
+      </exec>
+  </target>
+
+<!-- #######################################################################################
+Check code copy and paste 
+-->
+  <target name="phpcpd" description="find douplicate code">
+  <echo>Checking for copy and paste code</echo>
+    <exec osfamily="windows" executable="${basedir}/vendor/bin/phpcpd.bat">
+      <arg value="--log-pmd" />
+      <arg value="${basedir}/build/logs/pmd-cpd.xml"/>
+      <arg path="${basedir}/src"/>
+    </exec>
+      <exec osfamily="unix" executable="${basedir}/vendor/bin/phpcpd">
+          <arg value="--log-pmd" />
+          <arg value="${basedir}/build/logs/pmd-cpd.xml"/>
+          <arg path="${basedir}/src"/>
+      </exec>
+  </target>
+
+<!-- #######################################################################################
+create documentation
+-->
+  <target name="phpdox" description="Generate API Documentation">
+  <echo>generating api documentation</echo>
+    <exec osfamily="windows" executable="${basedir}/vendor/bin/phpdox.bat">
+    </exec>
+      <exec osfamily="unix" executable="${basedir}/vendor/bin/phpdox">
+      </exec>
+  </target>
+
+<!-- #######################################################################################
+Run phpunit
+-->
+  <target  name="PHPUnit" description="Run PHP Unit">
+  <echo>Running phpunit</echo>
+    <exec osfamily="unix" executable="${basedir}/vendor/bin/phpunit" failonerror="true">
+      <arg value="--configuration"/>
+      <arg value="${basedir}/phpunit.xml"/>
+      <arg value="--log-junit"/>
+      <arg value="${basedir}/build/logs/phpunit/unitreport.xml"/>
+      <arg value="--coverage-clover"/>
+      <arg value="${basedir}/build/logs/phpunit/clover.xml"/>
+      <arg value="tests/"/>
+  
+
+    </exec>
+      <exec osfamily="windows" executable="${basedir}/vendor/bin/phpunit.bat" failonerror="true">
+          <arg value="--configuration"/>
+          <arg value="${basedir}/phpunit.xml"/>
+      </exec>
+  </target>
+
+<!-- #######################################################################################
+Package the release
+-->
+   <target name="package" description="package the release">
+   <echo>Packaging release ${basedir}/../release/release-${TAG_TO_BUILD}.zip</echo>
+      <zip 
+	destfile="${basedir}/../release/release-${TAG_TO_BUILD}.zip"
+        basedir="." excludes="vendor/**, release/**"/>
+
+
+ <echo>Packaging release ${basedir}/../release/release-${TAG_TO_BUILD}.zip</echo>
+      </target>
+
+<!-- #######################################################################################
+Release the package in Nexus
+-->
+<target xmlns:ivy="antlib:org.apache.ivy.ant" name="release-nexus" depends="dist, resolve">
+        <property name="ivy.pom.version" value="${TAG_TO_BUILD}"/>
+        <ivy:makepom ivyfile="ivy.xml" pomfile="target/pom/${ivy.module}.pom">
+            <mapping conf="*" scope="compile"/>
+        </ivy:makepom>
+
+           <zip destfile="target/zip/${ivy.module}.zip">
+            <fileset dir="${basedir}">
+                <include name="**"/>
+                <include name="target/zip/package.xml"/>
+                <exclude name="target/**"/>
+                <exclude name="target/**"/>
+                <exclude name=".ant/**"/>
+                <exclude name="ivy*.xml"/>
+                <exclude name="build.xml"/>
+                <exclude name=".idea/**"/>
+                <exclude name=".git/**"/>
+                <exclude name="vendor/**"/>
+            </fileset>
+        </zip>
+ 
+
+        <ivy:publish resolver="publish" pubrevision="${TAG_TO_BUILD}" publishivy="false">
+            <artifacts pattern="target/[type]/[artifact].[ext]" />
+        </ivy:publish>
+</target>
+
+<!-- #######################################################################################
+Call cleaning after building
+-->
+<target name="clean-cache" description="Clean and purge caches">
+    <echo>Deleting ant and ivy cachefiles now</echo>
+    <ivy:cleancache/>
+</target>
+</project>

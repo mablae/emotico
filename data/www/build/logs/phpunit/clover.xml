@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1474921696">
+  <project timestamp="1474921696">
+    <package name="TestPhpProject">
+      <file name="/var/www/html/lektionen/docker/linking/dockerlessons/testproject2/app/src/Math.php">
+        <class name="Math" namespace="TestPhpProject">
+          <metrics complexity="2" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="3" elements="5" coveredelements="5"/>
+        </class>
+        <line num="5" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="7" type="stmt" count="1"/>
+        <line num="8" type="stmt" count="1"/>
+        <line num="9" type="method" name="add" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="11" type="stmt" count="1"/>
+        <metrics loc="13" ncloc="13" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="3" elements="5" coveredelements="5"/>
+      </file>
+    </package>
+    <metrics files="1" loc="13" ncloc="13" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="3" elements="5" coveredelements="5"/>
+  </project>
+</coverage>

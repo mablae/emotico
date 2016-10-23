@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="2.7.0">
+<file name="/var/www/html/lektionen/docker/linking/dockerlessons/testproject2/app/src/Math.php">
+ <error line="3" column="1" severity="error" message="PHP keywords must be lowercase; expected &quot;class&quot; but found &quot;Class&quot;" source="Generic.PHP.LowerCaseKeyword.Found"/>
+</file>
+</checkstyle>
+

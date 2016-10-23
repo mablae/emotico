@@ -102,7 +102,9 @@ services:
     hostname: rabbit1
     environment:
       - ERLANG_COOKIE=abcdefg
-      
+    networks:
+      - development
+
 networks:
   development:
     # Use a custom driver

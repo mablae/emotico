@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="tests/" tests="1" assertions="1" failures="0" errors="0" time="0.004593">
+    <testsuite name="MathTest" file="/var/www/html/lektionen/docker/linking/dockerlessons/testproject2/app/tests/MathTest.php" tests="1" assertions="1" failures="0" errors="0" time="0.004593">
+      <testcase name="testAdd" class="MathTest" file="/var/www/html/lektionen/docker/linking/dockerlessons/testproject2/app/tests/MathTest.php" line="8" assertions="1" time="0.004593"/>
+    </testsuite>
+  </testsuite>
+</testsuites>

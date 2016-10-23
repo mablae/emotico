@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<index xmlns="http://xml.phpdox.net/src" basedir="/var/www/html/lektionen/docker/linking/dockerlessons/testproject2/app/src">
+  <namespace name="TestPhpProject">
+    
+  <class name="Math" src="Math.php" xml="classes/TestPhpProject_Math.xml"/></namespace>
+</index>

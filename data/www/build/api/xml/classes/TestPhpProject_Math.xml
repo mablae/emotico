@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="TestPhpProject\Math" namespace="TestPhpProject" name="Math" abstract="false" final="false" start="3" end="13">
+  <file path="./src" file="Math.php" realpath="/var/www/html/lektionen/docker/testPHPProject/TestPhpProject_bak/app/src/Math.php" size="187" time="2016-09-24T17:19:06+00:00" unixtime="1474737546" sha1="d0a5945ad688fe925d23f23ff7424985c997536c" relative="Math.php"/>
+  <constructor name="__construct" start="5" end="8" abstract="false" final="false" static="false" visibility="public"/>
+  <method name="add" start="9" end="12" abstract="false" final="false" static="false" visibility="public">
+    <parameter name="x" byreference="false" type="{unknown}"/>
+    <parameter name="y" byreference="false" type="{unknown}"/>
+  </method>
+</class>

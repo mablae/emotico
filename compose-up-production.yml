@@ -97,6 +97,16 @@ services:
     restart: always
     networks:
       - production
+
+  rabbit1:
+      container_name: rabbitmq
+      image: mittax/lemp-rabbitmq
+      hostname: rabbit1
+      environment:
+        - ERLANG_COOKIE=abcdefg
+      networks:
+        - production
+
 networks:
   production:
     # Use a custom driver

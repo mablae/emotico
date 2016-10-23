@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<source xmlns="http://xml.phpdox.net/src">
+<<<<<<< HEAD
+  <dir name="/var/www/html/lektionen/docker/testPHPProject/TestPhpProject_bak/app/src">
+    <file name="Math.php" size="187" time="2016-09-24T17:19:06+00:00" unixtime="1474737546" sha1="d0a5945ad688fe925d23f23ff7424985c997536c" xml="tokens/Math.php.xml"/>
+=======
+  <dir name="/var/www/html/lektionen/docker/testPHPProject/TestPhpProject/app/src">
+    <file name="Math.php" size="187" time="2016-09-25T14:31:05+00:00" unixtime="1474813865" sha1="d0a5945ad688fe925d23f23ff7424985c997536c" xml="tokens/Math.php.xml"/>
+>>>>>>> 9f6d61720645ef1e6d977441efdb919b0a5e7688
+  </dir>
+</source>
