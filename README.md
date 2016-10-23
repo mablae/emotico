@@ -35,7 +35,20 @@ Docker compose: https://docs.docker.com/compose/install/
 
     docker-compose -f compose-up-development.yml up
     
+    
 OR
 
     docker-compose -f compose-up-production.yml up
-   
+ 
+ 
+### Add a vhost
+To install database dependencies composer hast to know how to resolve the mariadb host. You have to create a /etc/hosts entry
+* -ip of miria db-   mariadb
+* run composer install
+ 
+### Usage
+
+* serve to localhost:8087 for dev
+* serve to localhost:8088 for prod
+
+
