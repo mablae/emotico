@@ -8,7 +8,6 @@ services:
       - wwwdata
       - nginx
       - mariadb
-      - php56
       - php70
     volumes:
       - ./data/backups:/var/backups
@@ -37,23 +36,6 @@ services:
     networks:
       - development  
     restart: always
-  php56:
-    container_name: php56
-    image: mittax/lemp-php56
-    environment:
-      PHP_ENV: 'development'
-      PHP_APCU_ENABLED: 'false'
-      PHP_XDEBUG_ENABLED: 'false'
-    volumes:
-      - ./data/config/php/pool56/:/etc/php5/fpm/pool.d
-      - ./data/config/php/ini56/development.ini:/etc/php5/mods-available/development.ini
-      - ./data/config/php/ini56/production.ini:/etc/php5/mods-available/production.ini
-      - ./data/log/php56:/var/log/php
-    volumes_from:
-      - wwwdata
-    restart: always
-    networks:
-      - development
   php70:
     container_name: php70
     image: mittax/lemp-php70
