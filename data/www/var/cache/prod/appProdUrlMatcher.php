@@ -27,18 +27,29 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
         $context = $this->context;
         $request = $this->request;
 
-        // api_homepage
-        if (rtrim($pathinfo, '/') === '') {
-            if (substr($pathinfo, -1) !== '/') {
-                return $this->redirect($pathinfo.'/', 'api_homepage');
+        if (0 === strpos($pathinfo, '/emotico/api')) {
+            // emotico_emotico_default_get
+            if ($pathinfo === '/emotico/api') {
+                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'HEAD'));
+                    goto not_emotico_emotico_default_get;
+                }
+
+                return array (  '_controller' => 'EmoticoBundle\\EmoticoBundle\\Controller\\DefaultController::getAction',  '_route' => 'emotico_emotico_default_get',);
             }
+            not_emotico_emotico_default_get:
 
-            return array (  '_controller' => 'ApiBundle\\Controller\\DefaultController::indexAction',  '_format' => 'json',  '_route' => 'api_homepage',);
-        }
+            // emotico_emotico_default_post
+            if ($pathinfo === '/emotico/api') {
+                if ($this->context->getMethod() != 'POST') {
+                    $allow[] = 'POST';
+                    goto not_emotico_emotico_default_post;
+                }
 
-        // api_test
-        if ($pathinfo === '/test') {
-            return array (  '_controller' => 'ApiBundle\\Controller\\DefaultController::testAction',  '_format' => 'json',  '_route' => 'api_test',);
+                return array (  '_controller' => 'EmoticoBundle\\EmoticoBundle\\Controller\\DefaultController::postAction',  '_route' => 'emotico_emotico_default_post',);
+            }
+            not_emotico_emotico_default_post:
+
         }
 
         // get_demos

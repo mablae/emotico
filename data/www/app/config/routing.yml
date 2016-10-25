@@ -1,3 +1,7 @@
+emotico_bundle_emotico:
+    resource: "@EmoticoBundleEmoticoBundle/Controller/"
+    type:     annotation
+
 api:
     type: rest
     resource: "@ApiBundle/Resources/config/routing.yml"

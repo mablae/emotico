@@ -76,6 +76,7 @@ fos_rest:
         default_format: json                            # All responses should be JSON formated
         include_format: false                           # We do not include format in request, so that all responses
                                                         # will eventually be JSON formated
+    allowed_methods_listener: true
 
 fos_user:
     db_driver: orm

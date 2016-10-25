@@ -18,9 +18,21 @@ class DefaultController extends FOSRestController
         return $this->render('ApiBundle:Default:index.html.twig');
     }
 
-    public function testAction()
+    /**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="List all emoticos",
+     *  section = "Emoticodasdsad",
+     *  statusCodes={
+     *     200="Returned when successful",
+     *     403="Returned when the user is not authorized to say hello"
+     *  },
+     * )
+     * @return array
+     */
+    public function testdsdsadAction()
     {
-        return $this->handleView($this->view(array('dasdasd')));
+        return $this->handleView($this->view(array('this is for testing')));
     }
 
 }
