@@ -2,6 +2,11 @@ api_homepage:
     path:     /
     defaults: { _controller: ApiBundle:Default:index }
 
+api_test:
+    path:     /test
+    defaults: { _controller: ApiBundle:Default:test }
+
+
 api_demos:
     type: rest
     resource: ApiBundle\Controller\DemoController

@@ -13,7 +13,9 @@ services:
       - ./data/backups:/var/backups
     restart: always
     networks:
-        - production
+      production:
+        ipv4_address: 172.16.237.6
+        ipv6_address: 2001:3984:3989::6
   wwwdata:
     container_name: wwwdata
     image: mittax/lemp-wwwdata
@@ -21,7 +23,9 @@ services:
       - ./data/www:/var/www
     restart: always
     networks:
-        - production
+      production:
+        ipv4_address: 172.16.237.7
+        ipv6_address: 2001:3984:3989::7
   nginx:
     container_name: nginx
     image: mittax/lemp-nginx
@@ -32,9 +36,10 @@ services:
       - wwwdata
     ports:
       - "8088:80"
-      - "4434:443"
     networks:
-      - production  
+      production:
+        ipv4_address: 172.16.237.8
+        ipv6_address: 2001:3984:3989::8
     restart: always
   php70:
     container_name: php70
@@ -53,7 +58,9 @@ services:
       - wwwdata
     restart: always
     networks:
-      - production
+      production:
+        ipv4_address: 172.16.237.13
+        ipv6_address: 2001:3984:3989::13
   mariadb:
     container_name: mariadb
     image: mittax/lemp-mariadb
@@ -67,17 +74,22 @@ services:
       - "3308:3306"
     restart: always
     networks:
-      - production
+      production:
+        ipv4_address: 172.16.237.10
+        ipv6_address: 2001:3984:3989::10
+
   redis:
     container_name: redis
     image: redis
     volumes:
       - ./data/config/redis/redis.conf:/usr/local/etc/redis/redis.conf
     ports:
-      - "6379:6379"
+      - "63999:6379"
     restart: always
     networks:
-      - production
+      production:
+        ipv4_address: 172.16.237.11
+        ipv6_address: 2001:3984:3989::11
 
   rabbit1:
       container_name: rabbitmq
@@ -86,9 +98,20 @@ services:
       environment:
         - ERLANG_COOKIE=abcdefg
       networks:
-        - production
+        production:
+          ipv4_address: 172.16.237.12
+          ipv6_address: 2001:3984:3989::12
 
 networks:
   production:
-    # Use a custom driver
     driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: "true"
+      com.docker.network.bridge.enable_ip_masquerade: "false"
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.16.237.0/24
+        gateway: 172.16.237.1
+      - subnet: 2001:3984:3989::/64
+        gateway: 2001:3984:3989::1
