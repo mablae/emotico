@@ -29,7 +29,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-
+use EmoticoBundle\EmoticoBundle\Entity\Emotico\Item as Emotico;
 /**
  * Class DefaultController
  * @package EmoticoBundle\EmoticoBundle\Controller
@@ -52,9 +52,9 @@ class DefaultController{
     public function getAction()
     {
         $response = array(
-            '1'=>array('title'=>'happyness', 'description'=>'what could happines mean'),
-            '2'=>array('title'=>'Fun', 'description'=>'what could fun mean')
-        );
+            '1'=>array('title'=>'happyness', 'description'=>'what could happines mean','status'=>1, 'user'=>123123123123),
+            '1'=>array('title'=>'fun', 'description'=>'what could fun mean','status'=>1, 'user'=>534345345543),
+            );
 
         return new JsonResponse($response, 200);
     }
@@ -92,12 +92,18 @@ class DefaultController{
      *     400="User already exist"
      *  },
      * )
+     *
      * @Route("/emotico/api/{emotico}")
      * @Method({"POST"})
-     * @ParamConverter("Emotico", class="EmoticoBundleEmoticoBundle:Emotico:xtItem")
+     *
+     * @return Response
      */
-    public function postAction(Emotico $emotico)
+    public function postAction($emotico)
     {
+        var_dump($emotico);
+
+        die();
+
         $response = array(
             '1'=>array('title'=>'happyness', 'description'=>'what could happines mean'),
         );
@@ -137,6 +143,8 @@ class DefaultController{
      * )
      * @Route("/emotico/api/{emotico}")
      * @Method({"PATCH"})
+     * @ParamConverter("Emotico", class="EmoticoBundle\EmoticoBundle\Entity\Emotico\Item")
+
      */
     public function patchAction()
     {

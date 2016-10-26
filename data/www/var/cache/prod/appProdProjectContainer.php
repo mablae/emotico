@@ -530,10 +530,11 @@ class appProdProjectContainer extends Container
         $c->addDriver($a, 'AppBundle\\Entity');
         $c->addDriver($a, 'ApiBundle\\Entity');
         $c->addDriver($b, 'FOS\\OAuthServerBundle\\Entity');
+        $c->addDriver(new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($this->get('annotation_reader'), array(0 => ($this->targetDirs[3].'/src/EmoticoBundle/EmoticoBundle/Entity'))), 'EmoticoBundle\\EmoticoBundle\\Entity');
         $c->addDriver(new \Doctrine\ORM\Mapping\Driver\XmlDriver(new \Doctrine\Common\Persistence\Mapping\Driver\SymfonyFileLocator(array(($this->targetDirs[3].'/vendor/friendsofsymfony/user-bundle/Resources/config/doctrine-mapping') => 'FOS\\UserBundle\\Model'), '.orm.xml')), 'FOS\\UserBundle\\Model');
 
         $d = new \Doctrine\ORM\Configuration();
-        $d->setEntityNamespaces(array('AppBundle' => 'AppBundle\\Entity', 'FOSOAuthServerBundle' => 'FOS\\OAuthServerBundle\\Entity', 'ApiBundle' => 'ApiBundle\\Entity'));
+        $d->setEntityNamespaces(array('AppBundle' => 'AppBundle\\Entity', 'FOSOAuthServerBundle' => 'FOS\\OAuthServerBundle\\Entity', 'ApiBundle' => 'ApiBundle\\Entity', 'EmoticoBundleEmoticoBundle' => 'EmoticoBundle\\EmoticoBundle\\Entity'));
         $d->setMetadataCacheImpl($this->get('doctrine_cache.providers.doctrine.orm.default_metadata_cache'));
         $d->setQueryCacheImpl($this->get('doctrine_cache.providers.doctrine.orm.default_query_cache'));
         $d->setResultCacheImpl($this->get('doctrine_cache.providers.doctrine.orm.default_result_cache'));
@@ -3079,7 +3080,7 @@ class appProdProjectContainer extends Container
 
         $f = new \Symfony\Component\Security\Http\AccessMap();
 
-        return $this->services['security.firewall.map.context.api'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($f, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(80, 443), $a), 1 => new \FOS\OAuthServerBundle\Security\Firewall\OAuthListener($b, $c, $d), 2 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '5810ec1f8167e0.78925018', $a, $c), 3 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, $this->get('security.access.decision_manager'), $f, $c)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), new \Symfony\Component\Security\Http\HttpUtils($e, $e), 'api', new \FOS\OAuthServerBundle\Security\EntryPoint\OAuthEntryPoint($d), NULL, NULL, $a, true));
+        return $this->services['security.firewall.map.context.api'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($f, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(80, 443), $a), 1 => new \FOS\OAuthServerBundle\Security\Firewall\OAuthListener($b, $c, $d), 2 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '581108c54505a7.29243915', $a, $c), 3 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, $this->get('security.access.decision_manager'), $f, $c)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), new \Symfony\Component\Security\Http\HttpUtils($e, $e), 'api', new \FOS\OAuthServerBundle\Security\EntryPoint\OAuthEntryPoint($d), NULL, NULL, $a, true));
     }
 
     /*
@@ -4278,7 +4279,7 @@ class appProdProjectContainer extends Container
      */
     protected function getSecurity_Authentication_ManagerService()
     {
-        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \FOS\OAuthServerBundle\Security\Authentication\Provider\OAuthProvider(new \FOS\UserBundle\Security\UserProvider($this->get('fos_user.user_manager')), $this->get('fos_oauth_server.server'), $this->get('security.user_checker.api')), 1 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('5810ec1f8167e0.78925018')), true);
+        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \FOS\OAuthServerBundle\Security\Authentication\Provider\OAuthProvider(new \FOS\UserBundle\Security\UserProvider($this->get('fos_user.user_manager')), $this->get('fos_oauth_server.server'), $this->get('security.user_checker.api')), 1 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('581108c54505a7.29243915')), true);
 
         $instance->setEventDispatcher($this->get('event_dispatcher'));
 
