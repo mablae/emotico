@@ -1,6 +1,6 @@
 <?php
 
-namespace EmoticoBundle\EmoticoBundle\Repository\Emotico;
+namespace EmoticoBundle\EmoticoBundle\Repository;
 
 /**
  * ItemRepository
@@ -12,8 +12,7 @@ namespace EmoticoBundle\EmoticoBundle\Repository\Emotico;
 use AppBundle\Entity\User;
 
 
-
-class ItemRepository extends \Doctrine\ORM\EntityRepository implements IActions
+class ItemRepository extends \Doctrine\ORM\EntityRepository
 {
     public function attach(User $user)
     {
@@ -29,6 +28,5 @@ class ItemRepository extends \Doctrine\ORM\EntityRepository implements IActions
     {
         // TODO: Implement toggle() method.
     }
-
 
 }

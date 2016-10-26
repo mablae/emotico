@@ -1,32 +1,37 @@
 <?php
 
-namespace EmoticoBundle\EmoticoBundle\Entity\Emotico;
+namespace EmoticoBundle\EmoticoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use EmoticoBundle\EmoticoBundle\IActions;
+
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\MaxDepth; /* <=== Required */
 
 /**
  * Item
  *
- * @ORM\Table(name="emotico\item")
- * @ORM\Entity(repositoryClass="EmoticoBundle\EmoticoBundle\Repository\Emotico\ItemRepository")
+ * @ORM\Table(name="item")
+ * @ORM\Entity(repositoryClass="EmoticoBundle\EmoticoBundle\Repository\ItemRepository")
  */
-class Item
+class Item extends EntityAbstract implements IEntity
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="Id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $Id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(name="Title", type="string", length=255)
      */
-    private $title;
+    private $Title;
 
     /**
      * @var string
@@ -69,7 +74,7 @@ class Item
      */
     public function setTitle($title)
     {
-        $this->title = $title;
+        $this->Title = $title;
 
         return $this;
     }
@@ -81,7 +86,7 @@ class Item
      */
     public function getTitle()
     {
-        return $this->title;
+        return $this->Title;
     }
 
     /**
@@ -155,5 +160,7 @@ class Item
     {
         return $this->status;
     }
+
+
 }
 

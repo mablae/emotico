@@ -29,12 +29,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use EmoticoBundle\EmoticoBundle\Entity\Emotico\Item as Emotico;
+use EmoticoBundle\EmoticoBundle\Entity\Item;
+
 /**
  * Class DefaultController
  * @package EmoticoBundle\EmoticoBundle\Controller
  */
-class DefaultController{
+class DefaultController extends FOSRestController{
 
     /**
      * @ApiDoc(
@@ -85,55 +86,6 @@ class DefaultController{
 
     /**
      * @ApiDoc(
-     *  description="Create emotico",
-     *  section = "Emotico",
-     *  statusCodes={
-     *     200="Returned when successful",
-     *     400="User already exist"
-     *  },
-     * )
-     *
-     * @Route("/emotico/api/{emotico}")
-     * @Method({"POST"})
-     *
-     * @return Response
-     */
-    public function postAction($emotico)
-    {
-        var_dump($emotico);
-
-        die();
-
-        $response = array(
-            '1'=>array('title'=>'happyness', 'description'=>'what could happines mean'),
-        );
-
-        return new JsonResponse($response, 200);
-    }
-
-    /**
-     * @ApiDoc(
-     *  description="Update emotico",
-     *  section = "Emotico",
-     *  statusCodes={
-     *     200="Returned when successful",
-     *     400="User already exist"
-     *  },
-     * )
-     * @Route("/emotico/api/{emotico}")
-     * @Method({"PUT"})
-     */
-    public function putAction($emotico)
-    {
-        $response = array(
-            '1'=>array('title'=>'happyness', 'description'=>'what could happines mean'),
-        );
-
-        return new JsonResponse($response, 200);
-    }
-
-    /**
-     * @ApiDoc(
      *  description="Update a property of a emotico",
      *  section = "Emotico",
      *  statusCodes={
@@ -141,17 +93,16 @@ class DefaultController{
      *     400="User already exist"
      *  },
      * )
-     * @Route("/emotico/api/{emotico}")
-     * @Method({"PATCH"})
-     * @ParamConverter("Emotico", class="EmoticoBundle\EmoticoBundle\Entity\Emotico\Item")
-
+     * @Route("/emotico/{Id}")
+     * @Method({"Put"})
+     * @ParamConverter("Emotico", class="EmoticoBundleEmoticoBundle:Item")
+     * @param \EmoticoBundle\EmoticoBundle\Entity\Item $emotico
+     * @return Response
      */
-    public function patchAction()
+    public function putAction(Item $emotico)
     {
-        $response = array(
-            '1'=>array('title'=>'happyness', 'description'=>'what could happines mean'),
-        );
+        $response = $emotico->toJson($this->container->get('jms_serializer'));
 
-        return new JsonResponse($response, 200);
+        return new Response($response);
     }
 }
