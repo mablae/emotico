@@ -28,6 +28,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * Class DefaultController
@@ -47,7 +48,6 @@ class DefaultController{
      * )
      * @Route("/emotico/api")
      * @Method({"GET"})
-     *
      */
     public function getAction()
     {
@@ -94,8 +94,9 @@ class DefaultController{
      * )
      * @Route("/emotico/api/{emotico}")
      * @Method({"POST"})
+     * @ParamConverter("Emotico", class="EmoticoBundleEmoticoBundle:Emotico:xtItem")
      */
-    public function postAction($emotico)
+    public function postAction(Emotico $emotico)
     {
         $response = array(
             '1'=>array('title'=>'happyness', 'description'=>'what could happines mean'),

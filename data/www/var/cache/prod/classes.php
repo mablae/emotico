@@ -6875,13 +6875,6 @@ return rtrim($proxyNamespace,'\\') .'\\'.Proxy::MARKER.'\\'. ltrim($className,'\
 }
 }
 }
-namespace Symfony\Component\DependencyInjection
-{
-interface ContainerAwareInterface
-{
-public function setContainer(ContainerInterface $container = null);
-}
-}
 namespace Doctrine\Common\Persistence
 {
 interface ManagerRegistry extends ConnectionRegistry
@@ -6909,17 +6902,6 @@ public function resetEntityManager($name = null);
 public function getEntityNamespace($alias);
 public function getEntityManagerNames();
 public function getEntityManagerForClass($class);
-}
-}
-namespace Symfony\Component\DependencyInjection
-{
-trait ContainerAwareTrait
-{
-protected $container;
-public function setContainer(ContainerInterface $container = null)
-{
-$this->container = $container;
-}
 }
 }
 namespace Doctrine\Common\Persistence
