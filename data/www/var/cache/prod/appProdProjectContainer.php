@@ -1536,7 +1536,7 @@ class appProdProjectContainer extends Container
     {
         $this->services['fos_rest.exception_format_negotiator'] = $instance = new \FOS\RestBundle\Util\FormatNegotiator();
 
-        $instance->add($this->get('fos_rest.request_matcher.0dfc4cce134bee15f08405cb5cea4845b13ff7d8c8f779004218432a2c552bd0cd9f9d27'), array('prefer_extension' => false, 'methods' => NULL, 'stop' => false, 'fallback_format' => 'html', 'priorities' => array()));
+        $instance->add($this->get('fos_rest.request_matcher.0dfc4cce134bee15f08405cb5cea4845b13ff7d8c8f779004218432a2c552bd0cd9f9d27'), array('priorities' => array(0 => 'json'), 'fallback_format' => 'json', 'prefer_extension' => false, 'methods' => NULL, 'stop' => false));
 
         return $instance;
     }
@@ -1592,7 +1592,7 @@ class appProdProjectContainer extends Container
     {
         $this->services['fos_rest.format_negotiator'] = $instance = new \FOS\RestBundle\Util\FormatNegotiator();
 
-        $instance->add($this->get('fos_rest.request_matcher.0dfc4cce134bee15f08405cb5cea4845b13ff7d8c8f779004218432a2c552bd0cd9f9d27'), array('prefer_extension' => false, 'methods' => NULL, 'stop' => false, 'fallback_format' => 'html', 'priorities' => array()));
+        $instance->add($this->get('fos_rest.request_matcher.0dfc4cce134bee15f08405cb5cea4845b13ff7d8c8f779004218432a2c552bd0cd9f9d27'), array('priorities' => array(0 => 'json'), 'fallback_format' => 'json', 'prefer_extension' => false, 'methods' => NULL, 'stop' => false));
 
         return $instance;
     }
@@ -1724,7 +1724,7 @@ class appProdProjectContainer extends Container
      */
     protected function getFosRest_Routing_Loader_Reader_ActionService()
     {
-        return $this->services['fos_rest.routing.loader.reader.action'] = new \FOS\RestBundle\Routing\Loader\Reader\RestActionReader($this->get('annotation_reader'), $this->get('fos_rest.request.param_fetcher.reader'), $this->get('fos_rest.inflector.doctrine'), false, array('xml' => false, 'json' => false));
+        return $this->services['fos_rest.routing.loader.reader.action'] = new \FOS\RestBundle\Routing\Loader\Reader\RestActionReader($this->get('annotation_reader'), $this->get('fos_rest.request.param_fetcher.reader'), $this->get('fos_rest.inflector.doctrine'), false, array('json' => false));
     }
 
     /*
@@ -1750,7 +1750,7 @@ class appProdProjectContainer extends Container
      */
     protected function getFosRest_Routing_Loader_XmlCollectionService()
     {
-        return $this->services['fos_rest.routing.loader.xml_collection'] = new \FOS\RestBundle\Routing\Loader\RestXmlCollectionLoader($this->get('file_locator'), $this->get('fos_rest.routing.loader.processor'), false, array('xml' => false, 'json' => false), 'json');
+        return $this->services['fos_rest.routing.loader.xml_collection'] = new \FOS\RestBundle\Routing\Loader\RestXmlCollectionLoader($this->get('file_locator'), $this->get('fos_rest.routing.loader.processor'), false, array('json' => false), 'json');
     }
 
     /*
@@ -1763,7 +1763,7 @@ class appProdProjectContainer extends Container
      */
     protected function getFosRest_Routing_Loader_YamlCollectionService()
     {
-        return $this->services['fos_rest.routing.loader.yaml_collection'] = new \FOS\RestBundle\Routing\Loader\RestYamlCollectionLoader($this->get('file_locator'), $this->get('fos_rest.routing.loader.processor'), false, array('xml' => false, 'json' => false), 'json');
+        return $this->services['fos_rest.routing.loader.yaml_collection'] = new \FOS\RestBundle\Routing\Loader\RestYamlCollectionLoader($this->get('file_locator'), $this->get('fos_rest.routing.loader.processor'), false, array('json' => false), 'json');
     }
 
     /*
@@ -1815,7 +1815,7 @@ class appProdProjectContainer extends Container
      */
     protected function getFosRest_ViewHandlerService()
     {
-        $this->services['fos_rest.view_handler'] = $instance = new \FOS\RestBundle\View\ViewHandler(array('xml' => false, 'json' => false), 400, 204, false, array('html' => 302), 'twig');
+        $this->services['fos_rest.view_handler'] = $instance = new \FOS\RestBundle\View\ViewHandler(array('json' => false), 400, 204, false, array('html' => 302), 'twig');
 
         $instance->setExclusionStrategyGroups('');
         $instance->setExclusionStrategyVersion('');
@@ -3079,7 +3079,7 @@ class appProdProjectContainer extends Container
 
         $f = new \Symfony\Component\Security\Http\AccessMap();
 
-        return $this->services['security.firewall.map.context.api'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($f, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(80, 443), $a), 1 => new \FOS\OAuthServerBundle\Security\Firewall\OAuthListener($b, $c, $d), 2 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '581013d0a4b4d7.07082578', $a, $c), 3 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, $this->get('security.access.decision_manager'), $f, $c)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), new \Symfony\Component\Security\Http\HttpUtils($e, $e), 'api', new \FOS\OAuthServerBundle\Security\EntryPoint\OAuthEntryPoint($d), NULL, NULL, $a, true));
+        return $this->services['security.firewall.map.context.api'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($f, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(80, 443), $a), 1 => new \FOS\OAuthServerBundle\Security\Firewall\OAuthListener($b, $c, $d), 2 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '5810ae9af2c827.54933436', $a, $c), 3 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, $this->get('security.access.decision_manager'), $f, $c)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), new \Symfony\Component\Security\Http\HttpUtils($e, $e), 'api', new \FOS\OAuthServerBundle\Security\EntryPoint\OAuthEntryPoint($d), NULL, NULL, $a, true));
     }
 
     /*
@@ -4278,7 +4278,7 @@ class appProdProjectContainer extends Container
      */
     protected function getSecurity_Authentication_ManagerService()
     {
-        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \FOS\OAuthServerBundle\Security\Authentication\Provider\OAuthProvider(new \FOS\UserBundle\Security\UserProvider($this->get('fos_user.user_manager')), $this->get('fos_oauth_server.server'), $this->get('security.user_checker.api')), 1 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('581013d0a4b4d7.07082578')), true);
+        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \FOS\OAuthServerBundle\Security\Authentication\Provider\OAuthProvider(new \FOS\UserBundle\Security\UserProvider($this->get('fos_user.user_manager')), $this->get('fos_oauth_server.server'), $this->get('security.user_checker.api')), 1 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('5810ae9af2c827.54933436')), true);
 
         $instance->setEventDispatcher($this->get('event_dispatcher'));
 
@@ -4838,7 +4838,6 @@ class appProdProjectContainer extends Container
             'fos_rest.view_response_listener.class' => 'FOS\\RestBundle\\EventListener\\ViewResponseListener',
             'fos_rest.view_response_listener.force_view' => true,
             'fos_rest.formats' => array(
-                'xml' => false,
                 'json' => false,
             ),
             'fos_rest.force_redirects' => array(
@@ -4865,15 +4864,15 @@ class appProdProjectContainer extends Container
             'fos_rest.format_listener.rules' => array(
                 0 => array(
                     'path' => '^/',
+                    'priorities' => array(
+                        0 => 'json',
+                    ),
+                    'fallback_format' => 'json',
                     'prefer_extension' => false,
                     'host' => NULL,
                     'methods' => NULL,
                     'stop' => false,
-                    'fallback_format' => 'html',
-                    'exception_fallback_format' => 'html',
-                    'priorities' => array(
-
-                    ),
+                    'exception_fallback_format' => 'json',
                 ),
             ),
             'fos_rest.param_fetcher_listener.class' => 'FOS\\RestBundle\\EventListener\\ParamFetcherListener',

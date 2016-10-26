@@ -29,26 +29,59 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
 
         if (0 === strpos($pathinfo, '/emotico/api')) {
             // emotico_emotico_default_get
-            if (preg_match('#^/emotico/api/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+            if ($pathinfo === '/emotico/api') {
                 if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
                     $allow = array_merge($allow, array('GET', 'HEAD'));
                     goto not_emotico_emotico_default_get;
                 }
 
-                return $this->mergeDefaults(array_replace($matches, array('_route' => 'emotico_emotico_default_get')), array (  '_controller' => 'EmoticoBundle\\EmoticoBundle\\Controller\\DefaultController::getAction',));
+                return array (  '_controller' => 'EmoticoBundle\\EmoticoBundle\\Controller\\DefaultController::getAction',  '_route' => 'emotico_emotico_default_get',);
             }
             not_emotico_emotico_default_get:
 
+            // emotico_emotico_default_getbyid
+            if (preg_match('#^/emotico/api/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
+                    $allow = array_merge($allow, array('GET', 'HEAD'));
+                    goto not_emotico_emotico_default_getbyid;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'emotico_emotico_default_getbyid')), array (  '_controller' => 'EmoticoBundle\\EmoticoBundle\\Controller\\DefaultController::getByIdAction',));
+            }
+            not_emotico_emotico_default_getbyid:
+
             // emotico_emotico_default_post
-            if ($pathinfo === '/emotico/api') {
+            if (preg_match('#^/emotico/api/(?P<emotico>[^/]++)$#s', $pathinfo, $matches)) {
                 if ($this->context->getMethod() != 'POST') {
                     $allow[] = 'POST';
                     goto not_emotico_emotico_default_post;
                 }
 
-                return array (  '_controller' => 'EmoticoBundle\\EmoticoBundle\\Controller\\DefaultController::postAction',  '_route' => 'emotico_emotico_default_post',);
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'emotico_emotico_default_post')), array (  '_controller' => 'EmoticoBundle\\EmoticoBundle\\Controller\\DefaultController::postAction',));
             }
             not_emotico_emotico_default_post:
+
+            // emotico_emotico_default_put
+            if (preg_match('#^/emotico/api/(?P<emotico>[^/]++)$#s', $pathinfo, $matches)) {
+                if ($this->context->getMethod() != 'PUT') {
+                    $allow[] = 'PUT';
+                    goto not_emotico_emotico_default_put;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'emotico_emotico_default_put')), array (  '_controller' => 'EmoticoBundle\\EmoticoBundle\\Controller\\DefaultController::putAction',));
+            }
+            not_emotico_emotico_default_put:
+
+            // emotico_emotico_default_patch
+            if (preg_match('#^/emotico/api/(?P<emotico>[^/]++)$#s', $pathinfo, $matches)) {
+                if ($this->context->getMethod() != 'PATCH') {
+                    $allow[] = 'PATCH';
+                    goto not_emotico_emotico_default_patch;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'emotico_emotico_default_patch')), array (  '_controller' => 'EmoticoBundle\\EmoticoBundle\\Controller\\DefaultController::patchAction',));
+            }
+            not_emotico_emotico_default_patch:
 
         }
 
