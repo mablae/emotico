@@ -29,13 +29,13 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
 
         if (0 === strpos($pathinfo, '/emotico/api')) {
             // emotico_emotico_default_get
-            if ($pathinfo === '/emotico/api') {
+            if (preg_match('#^/emotico/api/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
                 if (!in_array($this->context->getMethod(), array('GET', 'HEAD'))) {
                     $allow = array_merge($allow, array('GET', 'HEAD'));
                     goto not_emotico_emotico_default_get;
                 }
 
-                return array (  '_controller' => 'EmoticoBundle\\EmoticoBundle\\Controller\\DefaultController::getAction',  '_route' => 'emotico_emotico_default_get',);
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'emotico_emotico_default_get')), array (  '_controller' => 'EmoticoBundle\\EmoticoBundle\\Controller\\DefaultController::getAction',));
             }
             not_emotico_emotico_default_get:
 

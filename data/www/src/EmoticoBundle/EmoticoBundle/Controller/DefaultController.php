@@ -8,16 +8,26 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 
+
 use FOS\RestBundle\Controller\Annotations\Get;
+
+
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 
-use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\View\View;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends FOSRestController
-{
+
+use FOS\RestBundle\Request\ParamFetcherInterface;
+use FOS\RestBundle\Controller\Annotations;
+
+use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\HttpFoundation\Response;
+
+class DefaultController{
 
     /**
      * @ApiDoc(
@@ -29,11 +39,12 @@ class DefaultController extends FOSRestController
      *     400="User already exist"
      *  },
      * )
-     * @Get("/emotico/api")
+     * @Get("/emotico/api/{id}")
+     *
      */
-    public function getAction()
+    public function getAction($id)
     {
-        return $this->render('EmoticoBundleEmoticoBundle:Default:index.html.twig');
+        return new ArrayResponse(array('dasdasd'=>'asdasdsad'));
     }
 
     /**
@@ -49,6 +60,29 @@ class DefaultController extends FOSRestController
      */
     public function postAction()
     {
-        return $this->render('EmoticoBundleEmoticoBundle:Default:index.html.twig');
+        //return $this->render('EmoticoBundleEmoticoBundle:Default:index.html.twig');
     }
+}
+
+class ArrayResponse extends Response
+{
+    public $data;
+
+    public function __construct($content, $status=null, array $headers = null)
+    {
+        $this->data = $content;
+
+        parent::__construct('FakeResponse', 200, array());
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    
+
 }

@@ -75,14 +75,39 @@ fos_rest:
     routing_loader:
         default_format: json                            # All responses should be JSON formated
         include_format: false                           # We do not include format in request, so that all responses
-                                                        # will eventually be JSON formated
+    disable_csrf_role: ROLE_API
+    param_fetcher_listener: true
+    view:
+        mime_types:
+            json: ['application/json', 'application/json;version=1.0', 'application/json;version=1.1', 'application/json;version=1.2']
+        view_response_listener: 'force'
+        formats:
+            xml:  true
+            json: true
+        templating_formats:
+            html: false
+    format_listener:
+        rules:
+            - { path: ^/, priorities: [ json, xml ], fallback_format: ~, prefer_extension: false }
+    exception:
+        codes:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
+            'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
+        messages:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
     allowed_methods_listener: true
+    access_denied_listener:
+        json: true
+    body_listener: true
+                                                        # will eventually be JSON formated
+
 
 fos_user:
     db_driver: orm
     firewall_name: api                                  # Seems to be used when registering user/reseting password,
                                                         # but since there is no "login", as so it seems to be useless in
                                                         # our particular context, but still required by "FOSUserBundle"
+
     user_class: ApiBundle\Entity\User
 
 fos_oauth_server:
@@ -104,3 +129,8 @@ jms_serializer:
   visitors:
     json:
       options: 0
+
+sensio_framework_extra:
+    view:    { annotations: false }
+    router:  { annotations: true }
+    request: { converters: true }
