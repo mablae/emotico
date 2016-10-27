@@ -34,7 +34,7 @@ class AbstractController extends FOSRestController implements IController
                 $errorArray['errors'][$error->getPropertyPath()] = $error->getMessage();
             }
 
-            return new JsonResponse($errorArray, \Symfony\Component\HttpFoundation\Response::HTTP_BAD_REQUEST);
+            return new Response($errorArray, \Symfony\Component\HttpFoundation\Response::HTTP_BAD_REQUEST);
         }
 
 
@@ -51,7 +51,7 @@ class AbstractController extends FOSRestController implements IController
 
             $response = array('message'=>'success', 'return'=>['id'=>$entity->getId()]);
 
-            return new JsonResponse($response, \Symfony\Component\HttpFoundation\Response::HTTP_OK);
+            return new Response($response, \Symfony\Component\HttpFoundation\Response::HTTP_OK);
         }
 
 
@@ -61,6 +61,28 @@ class AbstractController extends FOSRestController implements IController
 
         $response = array('message'=>'success', 'return'=>['id'=>$entity->getId()]);
 
-        return new JsonResponse($response, \Symfony\Component\HttpFoundation\Response::HTTP_OK);
+        return new Response($response, \Symfony\Component\HttpFoundation\Response::HTTP_OK);
     }
+
+    /**
+     * Fetch all Items
+     *
+     * @return JsonResponse
+     */
+    public function fetchAll($bundle)
+    {
+        $repository = $this->getDoctrine()->getRepository($bundle);
+
+        $items = $repository->findAll();
+
+        $list = array();
+
+        foreach ($items as $item) {
+            array_push($list,$item->toJson($this->container->get('jms_serializer')));
+        }
+
+        return new Response($list, \Symfony\Component\HttpFoundation\Response::HTTP_OK);
+        
+    }
+
 }

@@ -56,19 +56,7 @@ class DefaultController extends AbstractController
      */
     public function getAction()
     {
-        $repository = $this->getDoctrine()->getRepository('MittaxEmoticoBundle:Item');
-
-        $items = $repository->findAll();
-
-        $list = array();
-
-        foreach ($items as $item) {
-
-            array_push($list,$item->toJson($this->container->get('jms_serializer')));
-
-        }
-
-        return new JsonResponse($list, 200);
+        return $this->fetchAll('MittaxEmoticoBundle:Item');
     }
 
     /**
@@ -85,11 +73,13 @@ class DefaultController extends AbstractController
      * @Route("/emotico/item/{id}")
      * @ParamConverter("id", class="MittaxEmoticoBundle:Item")
      * @Method({"GET"})
+     * @param Item $item
+     * @return JsonResponse
      *
      */
     public function getByIdAction(Item $item)
     {
-        return $item->toJson($this->container->get('jms_serializer'));
+        return $item->toJsonResponse($this->container->get('jms_serializer'));
     }
 
     /**
