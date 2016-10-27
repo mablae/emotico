@@ -1,6 +1,12 @@
-emotico_bundle_emotico:
-    resource: "@EmoticoBundleEmoticoBundle/Controller/"
+mittax_core:
+    resource: "@MittaxCoreBundle/Controller/"
     type:     annotation
+    prefix:   /
+
+mittax_emotico:
+    resource: "@MittaxEmoticoBundle/Controller/"
+    type:     annotation
+
 
 api:
     type: rest

@@ -22,7 +22,8 @@ class AppKernel extends Kernel
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new ApiBundle\ApiBundle(),
-            new EmoticoBundle\EmoticoBundle\EmoticoBundleEmoticoBundle(),
+            new Mittax\EmoticoBundle\MittaxEmoticoBundle(),
+            new Mittax\CoreBundle\MittaxCoreBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

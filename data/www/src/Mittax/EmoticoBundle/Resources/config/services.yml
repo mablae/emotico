@@ -1,0 +1,5 @@
+services:
+  listener.requestresponse:
+    class: Mittax\EmoticoBundle\EventListener\ResponseListener
+    tags:
+      - { name: kernel.event_listener, event: kernel.request, method: onKernelResponse }

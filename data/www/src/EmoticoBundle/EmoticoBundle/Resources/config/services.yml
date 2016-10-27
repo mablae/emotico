@@ -1,5 +1,0 @@
-services:
-  listener.requestresponse:
-    class: EmoticoBundle\EmoticoBundle\EventListener\ResponseListener
-    tags:
-      - { name: kernel.event_listener, event: kernel.request, method: onKernelResponse }
