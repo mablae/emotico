@@ -100,6 +100,5 @@ class AbstractController extends FOSRestController implements IController
         }
 
         return new Response($list, \Symfony\Component\HttpFoundation\Response::HTTP_OK);
-        
     }
 }
