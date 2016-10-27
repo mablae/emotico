@@ -21,6 +21,10 @@ class AbstractController extends FOSRestController implements IController
      */
     public function persistAndSave(IEntity $entity, ConstraintViolationListInterface $validationErrors = null)
     {
+        $request = $this->container->get('request_stack')->getCurrentRequest();
+
+        $entity->setId($request->get('id'));
+
         if (count($validationErrors) > 0) {
 
             $errorArray = array();

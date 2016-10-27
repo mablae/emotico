@@ -56,7 +56,6 @@ class DefaultController extends AbstractController
      */
     public function getAction()
     {
-
         $repository = $this->getDoctrine()->getRepository('MittaxEmoticoBundle:Item');
 
         $items = $repository->findAll();
@@ -134,10 +133,6 @@ class DefaultController extends AbstractController
      */
     public function putAction(Item $item, ConstraintViolationListInterface $validationErrors)
     {
-        $request = $this->container->get('request_stack')->getCurrentRequest();
-
-        $item->setId($request->get('id'));
-
         return $this->persistAndSave($item, $validationErrors);
     }
 
