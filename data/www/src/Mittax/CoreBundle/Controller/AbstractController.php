@@ -35,7 +35,24 @@ class AbstractController extends FOSRestController implements IController
 
 
         $em = $this->getDoctrine()->getManager();
+
+        /**
+         * Update Item
+         */
+        if($entity->getId() > 0)
+        {
+            $em->merge($entity);
+
+            $em->flush();
+
+            $response = array('message'=>'success', 'return'=>['id'=>$entity->getId()]);
+
+            return new JsonResponse($response, \Symfony\Component\HttpFoundation\Response::HTTP_OK);
+        }
+
+
         $em->persist($entity);
+
         $em->flush();
 
         $response = array('message'=>'success', 'return'=>['id'=>$entity->getId()]);

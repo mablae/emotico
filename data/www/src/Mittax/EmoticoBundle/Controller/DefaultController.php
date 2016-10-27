@@ -117,7 +117,7 @@ class DefaultController extends AbstractController
 
     /**
      * @ApiDoc(
-     *  description="Update a property of a item",
+     *  description="Update an item",
      *  section = "Emotico",
      *  statusCodes={
      *     200="Returned when successful",
@@ -125,16 +125,20 @@ class DefaultController extends AbstractController
      *  },
      * )
      * @Route("/emotico/item/{id}")
-     * @Method({"Put"})
-     * @ParamConverter("Emotico", class="MittaxEmoticoBundle:Item")
+     * @Method({"PUT"})
+     * @ParamConverter("item", converter="fos_rest.request_body")
+     *
      * @param \Mittax\EmoticoBundle\Entity\Item $item
+     * @param ConstraintViolationListInterface $validationErrors
      * @return Response
      */
-    public function putAction(Item $item)
+    public function putAction(Item $item, ConstraintViolationListInterface $validationErrors)
     {
-        $response = $item->toJson($this->container->get('jms_serializer'));
+        $request = $this->container->get('request_stack')->getCurrentRequest();
 
-        return new Response($response);
+        $item->setId($request->get('id'));
+
+        return $this->persistAndSave($item, $validationErrors);
     }
 
     /**

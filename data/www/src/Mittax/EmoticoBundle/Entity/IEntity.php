@@ -21,4 +21,5 @@ interface IEntity
      * @return int
      */
     public function getId();
+
 }

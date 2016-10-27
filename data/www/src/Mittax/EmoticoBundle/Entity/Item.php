@@ -88,6 +88,16 @@ class Item extends EntityAbstract
     }
 
     /**
+     * Get id
+     *
+     * @return int
+     */
+    public function setId($id)
+    {
+        return $this->id = $id;
+    }
+
+    /**
      * Set title
      *
      * @param string $title
