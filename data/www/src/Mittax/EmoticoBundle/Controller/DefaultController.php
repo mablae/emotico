@@ -33,6 +33,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
  * Class DefaultController
@@ -96,13 +97,14 @@ class DefaultController extends AbstractController
      * @Route("/emotico/item")
      * @Method({"POST"})
      * @ParamConverter("item", converter="fos_rest.request_body")
+     *
+     * @param Item $item
+     * @param ConstraintViolationListInterface $validationErrors
      * @return Response
      */
-    public function postAction(Item $item)
+    public function postAction(Item $item, ConstraintViolationListInterface $validationErrors)
     {
-        $this->persistAndSave($item);
-
-        return $item->toJson($this->container->get('jms_serializer'));
+        return $this->persistAndSave($item, $validationErrors);
     }
 
     /**
@@ -152,7 +154,7 @@ class DefaultController extends AbstractController
 
         $item->setDeletedAt(new \DateTime());
 
-        $item->getGroupid(1);
+        $item->setGroupid(1);
 
         $item->setUserid(1);
 

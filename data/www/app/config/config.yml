@@ -75,6 +75,9 @@ nelmio_api_doc: ~
 fos_rest:
     body_converter:
         enabled: true
+        validate: true
+        validation_errors_argument: validationErrors # This is the default value
+
     routing_loader:
         default_format: json                            # All responses should be JSON formated
         include_format: false                           # We do not include format in request, so that all responses

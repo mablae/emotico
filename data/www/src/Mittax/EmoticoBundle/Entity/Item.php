@@ -8,6 +8,7 @@ use Mittax\EmoticoBundle\Entity\EntityAbstract;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\MaxDepth; /* <=== Required */
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Item
  *
@@ -28,48 +29,47 @@ class Item extends EntityAbstract
     /**
      * @var string
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="title", type="text")
      */
     private $title;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="description", type="text")
      */
     private $description;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="iconpaths", type="text")
      */
     private $iconpaths;
 
     /**
      * @var \DateTime
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(name="deletedAt", type="time")
      */
     private $deletedAt;
 
     /**
      * @var int
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="userid", type="integer")
      */
     private $userid;
 
     /**
      * @var int
-     *
      * @ORM\Column(name="groupid", type="integer", nullable=true)
      */
     private $groupid;

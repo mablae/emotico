@@ -33,5 +33,10 @@ class EntityAbstract implements IEntity
         return $jsonContent;
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
 
 }

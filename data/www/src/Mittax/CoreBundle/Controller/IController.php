@@ -8,15 +8,16 @@
 
 namespace Mittax\CoreBundle\Controller;
 
-
 use Mittax\EmoticoBundle\Entity\IEntity;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 interface IController
 {
     /**
-     * @param $entity
+     * @param IEntity $entity
+     * @param ConstraintViolationListInterface|null $validationErrors
      * @return mixed
      */
-    public function persistAndSave(IEntity $entity);
+    public function persistAndSave(IEntity $entity , ConstraintViolationListInterface $validationErrors = null);
 
 }
