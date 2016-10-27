@@ -17,7 +17,7 @@ class AbstractController extends FOSRestController implements IController
     /**
      * @param IEntity $entity
      * @param ConstraintViolationListInterface|null $validationErrors
-     * @return array
+     * @return Response
      */
     public function persistAndSave(IEntity $entity, ConstraintViolationListInterface $validationErrors = null)
     {
@@ -84,5 +84,4 @@ class AbstractController extends FOSRestController implements IController
         return new Response($list, \Symfony\Component\HttpFoundation\Response::HTTP_OK);
         
     }
-
 }

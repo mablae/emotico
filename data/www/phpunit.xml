@@ -13,8 +13,8 @@
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>src/EmoticoBundle/EmoticoBundle/Tests</directory>
+        <testsuite name="Mittax/EmoticoBundleTest">
+            <directory>src/Mittax/EmoticoBundle/Tests</directory>
         </testsuite>
     </testsuites>
 

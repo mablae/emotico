@@ -88,7 +88,7 @@ class DefaultController extends AbstractController
      *  section = "Emotico",
      *  statusCodes={
      *     200="Returned when successful",
-     *     400="User already exist"
+     *     400="Bad Request"
      *  },
      * )
      * @Route("/emotico/item")
