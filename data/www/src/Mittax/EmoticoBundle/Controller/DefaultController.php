@@ -56,12 +56,20 @@ class DefaultController extends AbstractController
      */
     public function getAction()
     {
-        $response = array(
-            '1'=>array('title'=>'happyness', 'description'=>'what could happines mean','status'=>1, 'user'=>123123123123),
-            '1'=>array('title'=>'fun', 'description'=>'what could fun mean','status'=>1, 'user'=>534345345543),
-        );
 
-        return new JsonResponse($response, 200);
+        $repository = $this->getDoctrine()->getRepository('MittaxEmoticoBundle:Item');
+
+        $items = $repository->findAll();
+
+        $list = array();
+
+        foreach ($items as $item) {
+
+            array_push($list,$item->toJson($this->container->get('jms_serializer')));
+
+        }
+
+        return new JsonResponse($list, 200);
     }
 
     /**
@@ -158,7 +166,7 @@ class DefaultController extends AbstractController
 
         $item->setUserid(1);
 
-        $item->setIconpaths(json_encode(['${mediapath/icon_small.jpg}', '${mediapath/icon_medium.jpg}', '${mediapath/icon_large.jpg}']));
+        $item->setIconpaths(['small'=>'$mediaPath/icons/small.jpg','medium'=>'$mediaPath/icons/small.jpg','large'=>'$mediaPath/icons/small.jpg']);
 
         $response = $item->toJson($this->container->get('jms_serializer'));
 

@@ -9,6 +9,7 @@ use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\MaxDepth; /* <=== Required */
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation\Accessor;
 /**
  * Item
  *
@@ -44,7 +45,8 @@ class Item extends EntityAbstract
     /**
      * @var string
      * @Assert\NotBlank()
-     * @ORM\Column(name="iconpaths", type="text")
+     * @ORM\Column(name="iconpaths", type="array")
+     * @Accessor(getter="serializer_getScanResultCache")
      */
     private $iconpaths;
 
