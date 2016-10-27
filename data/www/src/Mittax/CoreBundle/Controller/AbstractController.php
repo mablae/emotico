@@ -16,6 +16,25 @@ class AbstractController extends FOSRestController implements IController
 {
     /**
      * @param IEntity $entity
+     * @return Response
+     */
+    public function deleteByItem(IEntity $entity)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($entity);
+
+        $em->persist($entity);
+
+        $em->flush();
+
+        $response = array('message'=>'success');
+
+        return new Response($response, \Symfony\Component\HttpFoundation\Response::HTTP_OK);
+    }
+
+    /**
+     * @param IEntity $entity
      * @param ConstraintViolationListInterface|null $validationErrors
      * @return Response
      */
@@ -36,7 +55,6 @@ class AbstractController extends FOSRestController implements IController
 
             return new Response($errorArray, \Symfony\Component\HttpFoundation\Response::HTTP_BAD_REQUEST);
         }
-
 
         $em = $this->getDoctrine()->getManager();
 

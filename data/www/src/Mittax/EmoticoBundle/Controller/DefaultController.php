@@ -84,6 +84,28 @@ class DefaultController extends AbstractController
 
     /**
      * @ApiDoc(
+     *  resource=true,
+     *  description="delete a specific item",
+     *  section = "Emotico",
+     *  statusCodes={
+     *     200="Returned when successful",
+     *     404="No item found for this id"
+     *  },
+     * )
+     *
+     * @Route("/emotico/item/{id}")
+     * @ParamConverter("id", class="MittaxEmoticoBundle:Item")
+     * @Method({"DELETE"})
+     * @param Item $item
+     * @return JsonResponse
+     */
+    public function deleteAction(Item $item)
+    {
+        return $this->deleteByItem($item);
+    }
+
+    /**
+     * @ApiDoc(
      *  description="Adds a emotico",
      *  section = "Emotico",
      *  statusCodes={
