@@ -167,14 +167,7 @@ class DefaultControllerTest extends WebTestCase
      */
     public function testFailGetById()
     {
-        /**
-         * Test the get by id now
-         */
         $response = $this->_client->request('GET', $this->_base_uri  . '/emotico/item/bullshit');
-
-        $responseText = (string)$response->getBody();
-
-        $responseAsObject = \GuzzleHttp\json_decode($responseText);
 
         $this->expectExceptionCode(404);
     }
@@ -249,5 +242,16 @@ class DefaultControllerTest extends WebTestCase
         $this->assertEquals(200, $responseAsObject->status);
 
         $this->assertEquals('success', $responseAsObject->content->message);
+    }
+
+    /**
+     * Test if deletion fails
+     * @expectedException \GuzzleHttp\Exception\ClientException
+     */
+    public function testDeleteFail()
+    {
+        $response = $this->_client->request("DELETE", $this->_base_uri  . '/emotico/item/fakeid');
+
+        $this->expectExceptionCode(404);
     }
 }
