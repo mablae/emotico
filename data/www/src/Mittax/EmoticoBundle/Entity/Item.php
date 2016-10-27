@@ -46,7 +46,6 @@ class Item extends EntityAbstract
      * @var string
      * @Assert\NotBlank()
      * @ORM\Column(name="iconpaths", type="array")
-     * @Accessor(getter="serializer_getScanResultCache")
      */
     private $iconpaths;
 
