@@ -20,11 +20,6 @@ class DefaultControllerTest extends WebTestCase
     private $_base_uri='http://localhost:8089';
 
     /**
-     * @var string
-     */
-    private $_sampleDataResponse;
-
-    /**
      * @var \GuzzleHttp\Client
      */
     private $_client = null;
@@ -37,7 +32,7 @@ class DefaultControllerTest extends WebTestCase
     /**
      * Test getting the sampledata
      */
-    public function testSampleData()
+    public function testGetSampleData()
     {
         $this->assertContains($this->_sampelData, $this->_getSampleDataResponse());
     }
@@ -55,6 +50,8 @@ class DefaultControllerTest extends WebTestCase
     }
 
     /**
+     * Test Post with missing content type
+     *
      * @expectedException \GuzzleHttp\Exception\ClientException
      */
     public function testUnsupportedMediaTypeOnPost()
@@ -67,7 +64,7 @@ class DefaultControllerTest extends WebTestCase
     }
 
     /**
-     * test the post
+     * test the post method to create new objects
      */
     public function testPost()
     {
@@ -76,12 +73,12 @@ class DefaultControllerTest extends WebTestCase
         $responseAsObject = \GuzzleHttp\json_decode($responseText);
 
         /**
-         * Test if a last insert id is available in the response
+         * Test if a last insert id is available in the response, so the database insert was successful
          */
         $this->assertNotEmpty($responseAsObject->content->return->id);
 
         /**
-         * Test if the response was successfull
+         * Test if the request was successfull
          */
         $this->assertContains('success', $responseText);
     }
@@ -250,7 +247,7 @@ class DefaultControllerTest extends WebTestCase
      */
     public function testDeleteFail()
     {
-        $response = $this->_client->request("DELETE", $this->_base_uri  . '/emotico/item/fakeid');
+        $this->_client->request("DELETE", $this->_base_uri  . '/emotico/item/fakeid');
 
         $this->expectExceptionCode(404);
     }

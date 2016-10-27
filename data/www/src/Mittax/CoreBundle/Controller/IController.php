@@ -20,4 +20,15 @@ interface IController
      */
     public function persistAndSave(IEntity $entity , ConstraintViolationListInterface $validationErrors = null);
 
+    /**
+     * @param IEntity $entity
+     * @return mixed
+     */
+    public function deleteByItem(IEntity $entity);
+
+    /**
+     * @param $bundle
+     * @return mixed
+     */
+    public function fetchAll($bundle);
 }
