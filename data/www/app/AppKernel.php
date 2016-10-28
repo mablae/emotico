@@ -23,8 +23,8 @@ class AppKernel extends Kernel
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new ApiBundle\ApiBundle(),
             new Mittax\EmoticoBundle\MittaxEmoticoBundle(),
-            new Mittax\CoreBundle\MittaxCoreBundle(),
-            new Snc\RedisBundle\SncRedisBundle(),
+            new Mittax\CoreBundle\MittaxCoreBundle()
+
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
