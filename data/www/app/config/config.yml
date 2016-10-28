@@ -123,7 +123,7 @@ fos_oauth_server:
     refresh_token_class: ApiBundle\Entity\RefreshToken
     auth_code_class:     ApiBundle\Entity\AuthCode
     service:
-        user_provider: fos_user.user_manager             # This property will be used when valid credentials are given to load the user upon access token creation
+        user_provider: fos_user.user_provider.username             # This property will be used when valid credentials are given to load the user upon access token creation
 
 jms_serializer:
   metadata:
