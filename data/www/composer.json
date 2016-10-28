@@ -32,13 +32,13 @@
         "friendsofsymfony/rest-bundle": "^1.7",
         "nelmio/api-doc-bundle": "^2.12",
         "friendsofsymfony/oauth-server-bundle": "^1.5",
-        "guzzlehttp/guzzle": "*"
-
+        "guzzlehttp/guzzle": "*",
+        "predis/predis": "*",
+        "snc/redis-bundle": "*"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.0"
-
     },
     "scripts": {
         "post-install-cmd": [
