@@ -56,9 +56,7 @@ class DefaultControllerTest extends WebTestCase
      */
     public function testUnsupportedMediaTypeOnPost()
     {
-        $response = $this->_client->request('POST', $this->_base_uri  . '/emotico/item', ['body' => $this->_getSampleDataResponse()]);
-
-        $responseText = (string)$response->getBody();
+        $this->_client->request('POST', $this->_base_uri  . '/emotico/item', ['body' => $this->_getSampleDataResponse()]);
 
         $this->expectExceptionMessage('415');
     }
@@ -164,7 +162,7 @@ class DefaultControllerTest extends WebTestCase
      */
     public function testFailGetById()
     {
-        $response = $this->_client->request('GET', $this->_base_uri  . '/emotico/item/bullshit');
+        $this->_client->request('GET', $this->_base_uri  . '/emotico/item/bullshit');
 
         $this->expectExceptionCode(404);
     }
@@ -216,6 +214,9 @@ class DefaultControllerTest extends WebTestCase
         $this->assertGreaterThan(0, count($responseAsObject->content));
     }
 
+    /**
+     * Test if DELETE METHOD is working
+     */
     public function testDelete()
     {
         /**
