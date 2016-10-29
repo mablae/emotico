@@ -46,10 +46,12 @@ To install database dependencies composer hast to know how to resolve the mariad
 
 ###Prepare database
 ```php app/console doctrine:database:create```
+
 ```php app/console doctrine:schema:create```
 
 ###Set accessrights
 ```rm -rf var```
+
 ```chmod -R 777 *```
 
 ### Usage
