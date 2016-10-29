@@ -2,51 +2,50 @@
 
 namespace Mittax\EmoticoBundle\Tests\Controller;
 
+use Mittax\CoreBundle\Tests\Controller\AbstractTest;
+use Mittax\CoreBundle\Tests\Controller\IControllerTest;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
-class DefaultControllerTest extends WebTestCase
+require_once __DIR__. '/../../../../../app/autoload.php';
+
+class DefaultControllerTest extends AbstractTest implements IControllerTest
 {
     /**
      * @var string
      */
-    private $_sampelData ='"title":"a title","description"';
+    protected $_sampelData ='{"subject":"a title","content":"a description';
 
     /**
      * @var string
      */
-    private $_base_uri='http://localhost:8089';
+    protected $_bundle ='emotico';
 
-    /**
-     * @var \GuzzleHttp\Client
-     */
-    private $_client = null;
 
     public function setUp()
     {
-        $this->_client = new Client();
+        parent::setUp();
+
+        $this->setBundle('message');
     }
 
     /**
-     * Test getting the sampledata
+     * @param string $bundle
+     * @return void
      */
-    public function testGetSampleData()
+    public function setBundle(string $bundle)
     {
-        $this->assertContains($this->_sampelData, $this->_getSampleDataResponse());
+        parent::setBundle($bundle);
     }
 
     /**
-     * @return string
+     * test gitting a list
      */
-    private function _getSampleDataResponse()
+    public function testGet()
     {
-        $response = $this->_client->request('GET', $this->_base_uri . '/emotico/sample');
-
-        $sampleDataResponse = (string)$response->getBody();
-
-        return $sampleDataResponse;
+        parent::testGet();
     }
 
     /**
@@ -56,9 +55,7 @@ class DefaultControllerTest extends WebTestCase
      */
     public function testUnsupportedMediaTypeOnPost()
     {
-        $this->_client->request('POST', $this->_base_uri  . '/emotico/item', ['body' => $this->_getSampleDataResponse()]);
-
-        $this->expectExceptionMessage('415');
+        parent::testUnsupportedMediaTypeOnPost();
     }
 
     /**
@@ -66,19 +63,7 @@ class DefaultControllerTest extends WebTestCase
      */
     public function testPost()
     {
-        $responseText = $this->makeRequestWithSampleDataResponse();
-
-        $responseAsObject = \GuzzleHttp\json_decode($responseText);
-
-        /**
-         * Test if a last insert id is available in the response, so the database insert was successful
-         */
-        $this->assertNotEmpty($responseAsObject->content->return->id);
-
-        /**
-         * Test if the request was successfull
-         */
-        $this->assertContains('success', $responseText);
+        parent::testPost();
     }
 
     /**
@@ -86,22 +71,7 @@ class DefaultControllerTest extends WebTestCase
      */
     public function testPostWithValidationError()
     {
-        $response = $this->_client->request('POST', $this->_base_uri  . '/emotico/item',
-            [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json'],
-                'body' => '{"title":"sds<d dsad"}'
-            ]
-        );
-
-        $responseText = (string)$response->getBody();
-
-        $this->assertContains('This value should not be blank', $responseText);
-
-        $responseAsObject = \GuzzleHttp\json_decode($responseText);
-
-        $this->assertEquals(400, $responseAsObject->status);
+        parent::testPostWithValidationError();
     }
 
     /**
@@ -109,25 +79,7 @@ class DefaultControllerTest extends WebTestCase
      */
     public function testPut()
     {
-        $responseText = $this->makeRequestWithSampleDataResponse('POST');
-
-        $responseAsObject = \GuzzleHttp\json_decode($responseText);
-
-        $id = $responseAsObject->content->return->id;
-
-        $responseText = $this->makeRequestWithSampleDataResponse('PUT',"/emotico/item/" . $id);
-
-        $responseAsObject = \GuzzleHttp\json_decode($responseText);
-
-        /**
-         * Test status
-         */
-        $this->assertEquals(200, $responseAsObject->status);
-
-        /**
-         * Test if the objectid from the request is the same as in the response
-         */
-        $this->assertEquals($id, $responseAsObject->content->return->id);
+        parent::testPut();
     }
 
     /**
@@ -135,25 +87,7 @@ class DefaultControllerTest extends WebTestCase
      */
     public function testGetById()
     {
-        /**
-         * create an id by post a new item
-         */
-        $responseText = $this->makeRequestWithSampleDataResponse('POST');
-
-        $responseAsObject = \GuzzleHttp\json_decode($responseText);
-
-        $id = $responseAsObject->content->return->id;
-
-        /**
-         * Test the get by id now
-         */
-        $response = $this->_client->request('GET', $this->_base_uri  . '/emotico/item/' . $id);
-
-        $responseText = (string)$response->getBody();
-
-        $responseAsObject = \GuzzleHttp\json_decode($responseText);
-
-        $this->assertEquals(200,$responseAsObject->status);
+        parent::testGetById();
     }
 
     /**
@@ -162,56 +96,7 @@ class DefaultControllerTest extends WebTestCase
      */
     public function testFailGetById()
     {
-        $this->_client->request('GET', $this->_base_uri  . '/emotico/item/bullshit');
-
-        $this->expectExceptionCode(404);
-    }
-
-    /**
-     * @return string
-     */
-    private function makeRequestWithSampleDataResponse($verb = 'POST', $path = '/emotico/item')
-    {
-        $response = $this->_client->request($verb, $this->_base_uri  . $path,
-            [
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'Accept' => 'application/json'],
-                'body' => $this->_getSampleDataResponse()
-            ]
-        );
-
-        $responseText = (string)$response->getBody();
-
-        return $responseText;
-    }
-
-    /**
-     * test gitting a list
-     */
-    public function testGet()
-    {
-        /**
-         * create an id by post a new item
-         */
-        $responseText = $this->makeRequestWithSampleDataResponse('POST');
-
-        $responseAsObject = \GuzzleHttp\json_decode($responseText);
-
-        $id = $responseAsObject->content->return->id;
-
-        /**
-         * test gettimg a list
-         */
-        $response = $this->_client->request("GET", $this->_base_uri  . '/emotico/item');
-
-        $responseText = (string)$response->getBody();
-
-        $responseAsObject = \GuzzleHttp\json_decode($responseText);
-
-        $this->assertEquals(200, $responseAsObject->status);
-
-        $this->assertGreaterThan(0, count($responseAsObject->content));
+        parent::testFailGetById();
     }
 
     /**
@@ -219,27 +104,7 @@ class DefaultControllerTest extends WebTestCase
      */
     public function testDelete()
     {
-        /**
-         * create an id by post a new item
-         */
-        $responseText = $this->makeRequestWithSampleDataResponse('POST');
-
-        $responseAsObject = \GuzzleHttp\json_decode($responseText);
-
-        $id = $responseAsObject->content->return->id;
-
-        /**
-         * delete the last created id
-         */
-        $response = $this->_client->request("DELETE", $this->_base_uri  . '/emotico/item/' . $id);
-
-        $responseText = (string)$response->getBody();
-
-        $responseAsObject = \GuzzleHttp\json_decode($responseText);
-
-        $this->assertEquals(200, $responseAsObject->status);
-
-        $this->assertEquals('success', $responseAsObject->content->message);
+        parent::testDelete();
     }
 
     /**
@@ -248,8 +113,6 @@ class DefaultControllerTest extends WebTestCase
      */
     public function testDeleteFail()
     {
-        $this->_client->request("DELETE", $this->_base_uri  . '/emotico/item/fakeid');
-
-        $this->expectExceptionCode(404);
+        parent::testDeleteFail();
     }
 }

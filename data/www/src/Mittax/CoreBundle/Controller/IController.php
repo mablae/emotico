@@ -8,7 +8,7 @@
 
 namespace Mittax\CoreBundle\Controller;
 
-use Mittax\EmoticoBundle\Entity\IEntity;
+use Mittax\CoreBundle\Entity\IEntity;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 interface IController

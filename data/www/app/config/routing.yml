@@ -16,8 +16,6 @@ mittax_core:
 mittax_emotico:
     resource: "@MittaxEmoticoBundle/Controller/"
     type:     annotation
-
-
 api:
     type: rest
     resource: "@MittaxUserBundle/Resources/config/routing.yml"
@@ -36,3 +34,4 @@ NelmioApiDocBundle:
 
 fos_oauth_server_token:
     resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
+

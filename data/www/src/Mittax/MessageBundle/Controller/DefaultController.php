@@ -20,7 +20,6 @@ use FOS\RestBundle\Controller\Annotations\Put;
 /**
  * FOS
  */
-use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Request\ParamFetcherInterface;
@@ -57,7 +56,7 @@ class DefaultController extends AbstractController
      */
     public function getAction()
     {
-        return $this->fetchAll('MittaxMessageBundle:Item');
+        return $this->fetchAll('MittaxMessageBundle:Message');
     }
 
     /**
@@ -74,13 +73,13 @@ class DefaultController extends AbstractController
      * @Route("/message/item/{id}")
      * @ParamConverter("id", class="MittaxMessageBundle:Message")
      * @Method({"GET"})
-     * @param Item $item
+     * @param Item $message
      * @return JsonResponse
      *
      */
-    public function getByIdAction(Item $item)
+    public function getByIdAction(Item $message)
     {
-        return $item->toJsonResponse($this->container->get('jms_serializer'));
+        return $message->toJsonResponse($this->container->get('jms_serializer'));
     }
 
     /**
@@ -90,19 +89,19 @@ class DefaultController extends AbstractController
      *  section = "Emotico/Message",
      *  statusCodes={
      *     200="Returned when successful",
-     *     404="No item found for this id"
+     *     404="No Message found for this id"
      *  },
      * )
      *
      * @Route("/message/item/{id}")
      * @ParamConverter("id", class="MittaxMessageBundle:Message")
      * @Method({"DELETE"})
-     * @param Item $item
+     * @param Message $message
      * @return JsonResponse
      */
-    public function deleteAction(Item $item)
+    public function deleteAction(Message $message)
     {
-        return $this->deleteByItem($item);
+        return $this->deleteByItem($message);
     }
 
     /**
@@ -116,7 +115,7 @@ class DefaultController extends AbstractController
      * )
      * @Route("/message/item")
      * @Method({"POST"})
-     * @ParamConverter("item", converter="fos_rest.request_body")
+     * @ParamConverter("message", converter="fos_rest.request_body")
      *
      * @param Message $message
      * @param ConstraintViolationListInterface $validationErrors
@@ -130,17 +129,17 @@ class DefaultController extends AbstractController
     /**
      * @ApiDoc(
      *  description="Update a message",
-     *  section = "Emotico",
+     *  section = "Emotico/Message",
      *  statusCodes={
      *     200="Returned when successful",
-     *     400="Item already exist"
+     *     400="Message already exist"
      *  },
      * )
-     * @Route("/emotico/message/{id}")
+     * @Route("/message/item/{id}")
      * @Method({"PUT"})
      * @ParamConverter("message", converter="fos_rest.request_body")
      *
-     * @param \Mittax\MessageBundle\Entity\Message $item
+     * @param \Mittax\MessageBundle\Entity\Message $message
      * @param ConstraintViolationListInterface $validationErrors
      * @return Response
      */
@@ -152,10 +151,10 @@ class DefaultController extends AbstractController
     /**
      * @ApiDoc(
      *  description="Get a sample message",
-     *  section = "Emotico",
+     *  section = "Emotico/Message",
      *  statusCodes={
      *     200="Returned when successful",
-     *     400="Item already exist"
+     *     400="Message already exist"
      *  },
      * )
      * @Route("/message/sample")
@@ -164,21 +163,25 @@ class DefaultController extends AbstractController
      */
     public function sampleAction()
     {
-        $item = new Message();
+        $message = new Message();
 
-        $item->setSubject("a title");
+        $message->setSubject("a title");
 
-        $item->setContent("a description");
+        $message->setContent("a description");
 
-        $item->setCreatedAt(new \DateTime());
+        $message->setCreatedAt(new \DateTime());
 
-        $item->setDeletedAt(new \DateTime());
+        $message->setDeletedAt(new \DateTime());
 
-        $item->setRecipients([1,2,3]);
+        $message->setRecipients([1,2,3]);
 
-        $item->setUserid(1);
+        $message->setSender(1);
 
-        $response = $item->toJson($this->container->get('jms_serializer'));
+        $message->setStatus('SENDED');
+
+        $message->setNamespace('Mittax\MessageBundle\MessageTypes\Twillow');
+
+        $response = $message->toJson($this->container->get('jms_serializer'));
 
         return new Response($response);
     }

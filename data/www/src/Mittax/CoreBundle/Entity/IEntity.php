@@ -6,7 +6,7 @@
  * Time: 23:59
  */
 
-namespace Mittax\EmoticoBundle\Entity;
+namespace Mittax\CoreBundle\Entity;
 
 
 interface IEntity
@@ -28,4 +28,9 @@ interface IEntity
      */
     public function getId();
 
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function setId($id);
 }

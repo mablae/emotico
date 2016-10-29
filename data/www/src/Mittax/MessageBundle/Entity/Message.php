@@ -3,6 +3,12 @@
 namespace Mittax\MessageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Mittax\CoreBundle\Entity\EntityAbstract;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\MaxDepth; /* <=== Required */
+use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation\Accessor;
 
 /**
  * Message
@@ -10,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="message")
  * @ORM\Entity(repositoryClass="Mittax\MessageBundle\Repository\MessageRepository")
  */
-class Message
+class Message extends EntityAbstract
 {
     /**
      * @var int
@@ -19,60 +25,59 @@ class Message
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    public $id;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="subject", type="text")
      */
     private $subject;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="content", type="text")
      */
     private $content;
 
     /**
      * @var \DateTime
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(name="deletedAt", type="datetime")
      */
     private $deletedAt;
 
     /**
      * @var array
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="recipients", type="array")
      */
     private $recipients;
 
     /**
      * @var int
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="sender", type="integer")
      */
     private $sender;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="namespace", type="string", length=255)
      */
     private $namespace;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="status", type="string", length=255)
      */
     private $status;

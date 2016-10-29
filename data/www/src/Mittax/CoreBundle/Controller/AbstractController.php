@@ -2,7 +2,7 @@
 
 namespace Mittax\CoreBundle\Controller;
 
-use Mittax\EmoticoBundle\Entity\IEntity;
+use Mittax\CoreBundle\Entity\IEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 

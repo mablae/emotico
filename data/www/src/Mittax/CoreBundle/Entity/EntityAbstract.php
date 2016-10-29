@@ -6,9 +6,9 @@
  * Time: 23:55
  */
 
-namespace Mittax\EmoticoBundle\Entity;
+namespace Mittax\CoreBundle\Entity;
 
-use AppBundle\Entity\User;
+use Mittax\UserBundle\Entity\User;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\BrowserKit\Response;
@@ -61,5 +61,10 @@ class EntityAbstract implements IEntity
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 }

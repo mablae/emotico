@@ -4,7 +4,7 @@ namespace Mittax\EmoticoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use Mittax\EmoticoBundle\Entity\EntityAbstract;
+use Mittax\CoreBundle\Entity\EntityAbstract;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\MaxDepth; /* <=== Required */
@@ -25,7 +25,7 @@ class Item extends EntityAbstract
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    public $id;
 
     /**
      * @var string

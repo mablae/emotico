@@ -18,6 +18,13 @@
         </testsuite>
     </testsuites>
 
+
+    <testsuites>
+        <testsuite name="Mittax/MessageBundleTest">
+            <directory>src/Mittax/MessageBundle/Tests</directory>
+        </testsuite>
+    </testsuites>
+
     <filter>
         <whitelist>
             <directory>src</directory>
