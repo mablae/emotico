@@ -1,3 +1,8 @@
+mittax_user:
+    resource: "@MittaxUserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 mittax_core:
     resource: "@MittaxCoreBundle/Controller/"
     type:     annotation
@@ -10,7 +15,7 @@ mittax_emotico:
 
 api:
     type: rest
-    resource: "@ApiBundle/Resources/config/routing.yml"
+    resource: "@MittaxUserBundle/Resources/config/routing.yml"
     prefix:   /
 
 app:

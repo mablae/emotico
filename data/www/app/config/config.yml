@@ -61,6 +61,11 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+        # enable metadata caching
+        metadata_cache_driver: redis
+        # enable query caching
+        query_cache_driver: redis
+
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -114,14 +119,14 @@ fos_user:
                                                         # but since there is no "login", as so it seems to be useless in
                                                         # our particular context, but still required by "FOSUserBundle"
 
-    user_class: ApiBundle\Entity\User
+    user_class: Mittax\UserBundle\Entity\User
 
 fos_oauth_server:
     db_driver:           orm
-    client_class:        ApiBundle\Entity\Client
-    access_token_class:  ApiBundle\Entity\AccessToken
-    refresh_token_class: ApiBundle\Entity\RefreshToken
-    auth_code_class:     ApiBundle\Entity\AuthCode
+    client_class:        Mittax\UserBundle\Entity\Client
+    access_token_class:  Mittax\UserBundle\Entity\AccessToken
+    refresh_token_class: Mittax\UserBundle\Entity\RefreshToken
+    auth_code_class:     Mittax\UserBundle\Entity\AuthCode
     service:
         user_provider: fos_user.user_provider.username             # This property will be used when valid credentials are given to load the user upon access token creation
 
@@ -131,7 +136,7 @@ jms_serializer:
     directories:
       FOSUB:
         namespace_prefix: FOS\UserBundle
-        path: "@ApiBundle/Resources/serializer/FOSUB/"
+        path: "@MittaxUserBundle/Resources/serializer/FOSUB/"
   visitors:
     json:
       options: 0
@@ -140,3 +145,26 @@ sensio_framework_extra:
     view:    { annotations: false }
     router:  { annotations: true }
     request: { converters: true }
+snc_redis:
+    # configure predis as client
+    clients:
+        default:
+            type: predis
+            alias: default
+            dsn: redis://redis
+        doctrine:
+            type: predis
+            alias: doctrine
+            dsn: redis://redis
+    # configure doctrine caching
+    doctrine:
+        metadata_cache:
+            client: doctrine
+            entity_manager: default
+            document_manager: default
+        result_cache:
+            client: doctrine
+            entity_manager: [default]
+        query_cache:
+            client: doctrine
+            entity_manager: default

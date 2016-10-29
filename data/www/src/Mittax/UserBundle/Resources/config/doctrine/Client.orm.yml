@@ -1,0 +1,9 @@
+# src/Mittax/UserBundle/Resources/config/doctrine/User.orm.yml
+MittaxUserBundle\Entity\Client:
+    type:  entity
+    table: oauth2_clients
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO

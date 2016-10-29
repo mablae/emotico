@@ -1,5 +1,0 @@
-ApiBundle\Entity\User:
-  exclusion_policy: ALL
-  properties:
-    comments:
-      exclude: false

@@ -1,0 +1,8 @@
+users:
+    resource: "@MittaxUserBundle/Controller/UsersController.php"
+    type:     rest
+
+comments:
+    type:     rest
+    parent:   users
+    resource: "@MittaxUserBundle/Controller/CommentsController.php"

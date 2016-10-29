@@ -1,0 +1,19 @@
+# src/Mittax/UserBundle/Resources/config/doctrine/User.orm.yml
+MittaxUserBundle\Entity\AccessToken:
+    type:  entity
+    table: oauth2_access_tokens
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+                
+    manyToOne:
+      client:
+        targetEntity: Client
+        joinColumn:
+         nullable: false
+      user:
+        targetEntity: User
+        joinColumn:
+          nullable: true

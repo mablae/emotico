@@ -21,10 +21,10 @@ class AppKernel extends Kernel
             new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
-            new ApiBundle\ApiBundle(),
             new Mittax\EmoticoBundle\MittaxEmoticoBundle(),
-            new Mittax\CoreBundle\MittaxCoreBundle()
-
+            new Mittax\CoreBundle\MittaxCoreBundle(),
+            new Snc\RedisBundle\SncRedisBundle(),
+            new Mittax\UserBundle\MittaxUserBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
