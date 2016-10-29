@@ -32,7 +32,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
-
+use Mittax\MessageBundle\Service\Manager;
 /**
  * Class DefaultController
  * @package EmoticoBundle\EmoticoBundle\Controller
@@ -121,6 +121,11 @@ class DefaultController extends AbstractController
      */
     public function send(Message $message)
     {
+        /** @var $serviceManager \Mittax\MessageBundle\Service\Manager */
+        $serviceManager = $this->get('mittax_message.servicemanager');
+
+        $serviceManager->setMessage($message)->send();
+
         return $message->toJsonResponse($this->container->get('jms_serializer'));
     }
 
@@ -199,7 +204,7 @@ class DefaultController extends AbstractController
 
         $message->setStatus('SENDED');
 
-        $message->setNamespace('Mittax\MessageBundle\MessageTypes\Twillow');
+        $message->setNamespace('Mittax\MessageBundle\Service\MessageProvider\Twillo');
 
         $response = $message->toJson($this->container->get('jms_serializer'));
 
