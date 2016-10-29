@@ -12,8 +12,6 @@ On this LAMP Stack a Symfony 3 App is living
     * APCu (optional)
     * XDebug (optional)
     * Production/development config (optional)
-    * Wkhtmltopdf
-    * Wkhtmltoimage
     * Composer
     * PHPUnit
     * Phing/Ant
@@ -43,9 +41,17 @@ OR
  
 ### Add a vhost
 To install database dependencies composer hast to know how to resolve the mariadb host. You have to create a /etc/hosts entry
-* -ip of miria db-   mariadb
+* -ip of maria db-   mariadb
 * run composer install
- 
+
+###Prepare database
+```php app/console doctrine:database:create```
+```php app/console doctrine:schema:create```
+
+###Set accessrights
+```rm -rf var```
+```chmod -R 777 *```
+
 ### Usage
 
 * serve to localhost:8087 for dev
