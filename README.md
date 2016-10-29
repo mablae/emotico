@@ -56,7 +56,9 @@ To install database dependencies composer hast to know how to resolve the mariad
 
 ### Usage
 
-* serve to localhost:8087 for dev
-* serve to localhost:8088 for prod
+* [for dev](localhost:8089)
 
+### API Doc
+
+* [surf](localhost:8089/api/doc)
 
