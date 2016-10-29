@@ -27,8 +27,6 @@ class ClientTest extends \PHPUnit\Framework\TestCase
     public function setUp()
     {
         parent::setUp();
-
-        $this->setBundle($this->_bundle);
     }
 
     /**
