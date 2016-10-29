@@ -51,7 +51,7 @@ class DefaultController extends AbstractController
      *     404="No emoticos found"
      *  },
      * )
-     * @Route("/emotico/item")
+     * @Route("/emotico")
      * @Method({"GET"})
      */
     public function getAction()
@@ -70,7 +70,7 @@ class DefaultController extends AbstractController
      *  },
      * )
      *
-     * @Route("/emotico/item/{id}")
+     * @Route("/emotico/{id}")
      * @ParamConverter("id", class="MittaxEmoticoBundle:Item")
      * @Method({"GET"})
      * @param Item $item
@@ -93,7 +93,7 @@ class DefaultController extends AbstractController
      *  },
      * )
      *
-     * @Route("/emotico/item/{id}")
+     * @Route("/emotico/{id}")
      * @ParamConverter("id", class="MittaxEmoticoBundle:Item")
      * @Method({"DELETE"})
      * @param Item $item
@@ -113,7 +113,7 @@ class DefaultController extends AbstractController
      *     400="Bad Request"
      *  },
      * )
-     * @Route("/emotico/item")
+     * @Route("/emotico")
      * @Method({"POST"})
      * @ParamConverter("item", converter="fos_rest.request_body")
      *
@@ -135,7 +135,7 @@ class DefaultController extends AbstractController
      *     400="Item already exist"
      *  },
      * )
-     * @Route("/emotico/item/{id}")
+     * @Route("/emotico/{id}")
      * @Method({"PUT"})
      * @ParamConverter("item", converter="fos_rest.request_body")
      *
@@ -157,7 +157,7 @@ class DefaultController extends AbstractController
      *     400="Item already exist"
      *  },
      * )
-     * @Route("/emotico/sample")
+     * @Route("/emotico/sample/test")
      * @Method({"GET"})
      * @return Response
      */

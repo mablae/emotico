@@ -2,8 +2,6 @@
 
 namespace Mittax\MessageBundle\Controller;
 
-use Mittax\EmoticoBundle\Entity\Item;
-
 use Mittax\CoreBundle\Controller\AbstractController;
 
 use Mittax\MessageBundle\Entity\Message;
@@ -51,7 +49,7 @@ class DefaultController extends AbstractController
      *     404="No emoticos found"
      *  },
      * )
-     * @Route("/message/item")
+     * @Route("/message")
      * @Method({"GET"})
      */
     public function getAction()
@@ -70,14 +68,14 @@ class DefaultController extends AbstractController
      *  },
      * )
      *
-     * @Route("/message/item/{id}")
+     * @Route("/message/{id}")
      * @ParamConverter("id", class="MittaxMessageBundle:Message")
      * @Method({"GET"})
-     * @param Item $message
+     * @param Message $message
      * @return JsonResponse
      *
      */
-    public function getByIdAction(Item $message)
+    public function getByIdAction(Message $message)
     {
         return $message->toJsonResponse($this->container->get('jms_serializer'));
     }
@@ -93,7 +91,7 @@ class DefaultController extends AbstractController
      *  },
      * )
      *
-     * @Route("/message/item/{id}")
+     * @Route("/message/{id}")
      * @ParamConverter("id", class="MittaxMessageBundle:Message")
      * @Method({"DELETE"})
      * @param Message $message
@@ -106,6 +104,28 @@ class DefaultController extends AbstractController
 
     /**
      * @ApiDoc(
+     *  resource=true,
+     *  description="send a message",
+     *  section = "Emotico/Message",
+     *  statusCodes={
+     *     200="Returned when successful",
+     *     404="No Message found for this id"
+     *  },
+     * )
+     *
+     * @Route("/message/{id}/send")
+     * @ParamConverter("id", class="MittaxMessageBundle:Message")
+     * @Method({"GET"})
+     * @param Message $message
+     * @return JsonResponse
+     */
+    public function send(Message $message)
+    {
+        return $message->toJsonResponse($this->container->get('jms_serializer'));
+    }
+
+    /**
+     * @ApiDoc(
      *  description="Adds a message",
      *  section = "Emotico/Message",
      *  statusCodes={
@@ -113,7 +133,7 @@ class DefaultController extends AbstractController
      *     400="Bad Request"
      *  },
      * )
-     * @Route("/message/item")
+     * @Route("/message")
      * @Method({"POST"})
      * @ParamConverter("message", converter="fos_rest.request_body")
      *
@@ -135,7 +155,7 @@ class DefaultController extends AbstractController
      *     400="Message already exist"
      *  },
      * )
-     * @Route("/message/item/{id}")
+     * @Route("/message/{id}")
      * @Method({"PUT"})
      * @ParamConverter("message", converter="fos_rest.request_body")
      *
@@ -157,7 +177,7 @@ class DefaultController extends AbstractController
      *     400="Message already exist"
      *  },
      * )
-     * @Route("/message/sample")
+     * @Route("/message/sample/test")
      * @Method({"GET"})
      * @return Response
      */

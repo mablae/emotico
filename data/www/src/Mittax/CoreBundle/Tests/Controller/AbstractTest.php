@@ -52,7 +52,7 @@ class AbstractTest extends WebTestCase
      */
     public function getSampleDataResponse()
     {
-        $response = $this->_client->request('GET', $this->_base_uri . '/'.$this->_bundle.'/sample');
+        $response = $this->_client->request('GET', $this->_base_uri . '/'.$this->_bundle.'/sample/test');
 
         $sampleDataResponse = (string)$response->getBody();
 
@@ -68,16 +68,16 @@ class AbstractTest extends WebTestCase
         /**
          * create an id by post a new item
          */
-        $responseText = $this->makeRequestWithSampleDataResponse('POST', $this->_bundle.'/item');
+        $responseText = $this->makeRequestWithSampleDataResponse('POST', $this->_bundle);
 
         $responseAsObject = \GuzzleHttp\json_decode($responseText);
 
         $id = $responseAsObject->content->return->id;
 
         /**
-         * test gettimg a list
+         * test getting a list
          */
-        $response = $this->_client->request("GET", $this->_base_uri  . '/' . $this->_bundle .'/item');
+        $response = $this->_client->request("GET", $this->_base_uri  . '/' . $this->_bundle);
 
         $responseText = (string)$response->getBody();
 
@@ -95,7 +95,7 @@ class AbstractTest extends WebTestCase
      */
     public function testUnsupportedMediaTypeOnPost()
     {
-        $this->_client->request('POST', $this->_base_uri  . '/' . $this->_bundle .'/item', ['body' => $this->getSampleDataResponse()]);
+        $this->_client->request('POST', $this->_base_uri  . '/' . $this->_bundle, ['body' => $this->getSampleDataResponse()]);
 
         $this->expectExceptionMessage('415');
     }
@@ -105,7 +105,7 @@ class AbstractTest extends WebTestCase
      */
     public function testPost()
     {
-        $responseText = $this->makeRequestWithSampleDataResponse('POST', $this->_bundle . '/item');
+        $responseText = $this->makeRequestWithSampleDataResponse('POST', $this->_bundle);
 
         $responseAsObject = \GuzzleHttp\json_decode($responseText);
 
@@ -125,7 +125,7 @@ class AbstractTest extends WebTestCase
      */
     public function testPostWithValidationError()
     {
-        $path = $this->_base_uri  . '/' . $this->_bundle . '/item';
+        $path = $this->_base_uri  . '/' . $this->_bundle;
 
         $data = '{"title":"sds<d dsad"}';
 
@@ -152,16 +152,13 @@ class AbstractTest extends WebTestCase
      */
     public function testPut()
     {
-
-        $path = $this->_bundle . '/item';
-
-        $responseText = $this->makeRequestWithSampleDataResponse('POST', $path);
+        $responseText = $this->makeRequestWithSampleDataResponse('POST', $this->_bundle);
 
         $responseAsObject = \GuzzleHttp\json_decode($responseText);
 
         $id = $responseAsObject->content->return->id;
 
-        $path = $this->_bundle . '/item/' . $id;
+        $path = $this->_bundle . '/' . $id;
 
         $responseText = $this->makeRequestWithSampleDataResponse('PUT', $path);
 
@@ -186,7 +183,7 @@ class AbstractTest extends WebTestCase
         /**
          * create an id by post a new item
          */
-        $responseText = $this->makeRequestWithSampleDataResponse('POST', $this->_bundle.'/item');
+        $responseText = $this->makeRequestWithSampleDataResponse('POST', $this->_bundle);
 
         $responseAsObject = \GuzzleHttp\json_decode($responseText);
 
@@ -195,7 +192,7 @@ class AbstractTest extends WebTestCase
         /**
          * Test the get by id now
          */
-        $response = $this->_client->request('GET', $this->_base_uri  . '/' . $this->_bundle .'/item/' . $id);
+        $response = $this->_client->request('GET', $this->_base_uri  . '/' . $this->_bundle . '/' . $id);
 
         $responseText = (string)$response->getBody();
 
@@ -210,7 +207,7 @@ class AbstractTest extends WebTestCase
      */
     public function testFailGetById()
     {
-        $this->_client->request('GET', $this->_base_uri  . '/' . $this->_bundle .'/item/bullshit');
+        $this->_client->request('GET', $this->_base_uri  . '/' . $this->_bundle .'/bullshit');
 
         $this->expectExceptionCode(404);
     }
@@ -245,7 +242,7 @@ class AbstractTest extends WebTestCase
         /**
          * create an id by post a new item
          */
-        $responseText = $this->makeRequestWithSampleDataResponse('POST', $this->_bundle . '/item');
+        $responseText = $this->makeRequestWithSampleDataResponse('POST', $this->_bundle);
 
         $responseAsObject = \GuzzleHttp\json_decode($responseText);
 
@@ -255,7 +252,7 @@ class AbstractTest extends WebTestCase
          * delete the last created id
          */
 
-        $path = $this->_base_uri  . '/' . $this->_bundle .'/item/' . $id;
+        $path = $this->_base_uri  . '/' . $this->_bundle .'/' . $id;
 
         $response = $this->_client->request("DELETE", $path);
 
@@ -274,7 +271,7 @@ class AbstractTest extends WebTestCase
      */
     public function testDeleteFail()
     {
-        $this->_client->request("DELETE", $this->_base_uri  . '/' . $this->_bundle .'/item/fakeid');
+        $this->_client->request("DELETE", $this->_base_uri  . '/' . $this->_bundle .'/fakeid');
 
         $this->expectExceptionCode(404);
     }

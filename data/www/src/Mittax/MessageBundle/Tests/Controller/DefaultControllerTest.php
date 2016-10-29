@@ -28,7 +28,7 @@ class DefaultControllerTest extends AbstractTest implements IControllerTest
     {
         parent::setUp();
 
-        $this->setBundle('message');
+        $this->setBundle($this->_bundle);
     }
 
     /**
@@ -115,4 +115,36 @@ class DefaultControllerTest extends AbstractTest implements IControllerTest
     {
         parent::testDeleteFail();
     }
+
+
+    /**
+     * Test if gettimg an item by id is successfull
+     */
+    public function testSend()
+    {
+        /**
+         * create an id by post a new item
+         */
+        $responseText = $this->makeRequestWithSampleDataResponse('POST', $this->_bundle);
+
+        $responseAsObject = \GuzzleHttp\json_decode($responseText);
+
+        $id = $responseAsObject->content->return->id;
+
+        $this->assertGreaterThan(0, $id);
+
+        /**
+         * Test send
+         */
+        $path = $this->_bundle .'/'.$id.'/send';
+
+        $response = $this->_client->request('GET', $this->_base_uri  . '/' . $path);
+
+        $responseText = (string)$response->getBody();
+
+        $responseAsObject = \GuzzleHttp\json_decode($responseText);
+
+        $this->assertEquals(200,$responseAsObject->status);
+    }
+
 }

@@ -16,7 +16,7 @@ class DefaultControllerTest extends AbstractTest implements IControllerTest
     /**
      * @var string
      */
-    protected $_sampelData ='{"subject":"a title","content":"a description';
+    protected $_sampelData ='"title":"a title","description":"a description","iconpaths';
 
     /**
      * @var string
@@ -28,7 +28,7 @@ class DefaultControllerTest extends AbstractTest implements IControllerTest
     {
         parent::setUp();
 
-        $this->setBundle('message');
+        $this->setBundle($this->_bundle);
     }
 
     /**
