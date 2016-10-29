@@ -19,6 +19,10 @@ class Client implements IMessageProvider
      */
     private $_message;
 
+    /**
+     * Client constructor.
+     * @param Message $message
+     */
     public function __construct(Message $message)
     {
        $this->_message = $message;
@@ -27,6 +31,14 @@ class Client implements IMessageProvider
     public function send()
     {
         // TODO: Implement send() method.
+    }
+
+    /**
+     * @return Message
+     */
+    public function getMessage()
+    {
+       return $this->_message;
     }
 
 

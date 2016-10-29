@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 
 require_once __DIR__. '/../../../../../app/autoload.php';
 
-class ManagerTest extends \PHPUnit\Framework\TestCase
+class ClientTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var string
@@ -32,21 +32,12 @@ class ManagerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param string $bundle
-     * @return void
-     */
-    public function setBundle(string $bundle)
-    {
-    }
-
-    /**
      * test new Manager
      */
     public function testNewManager()
     {
         $this->assertInstanceOf(Manager::class, new Manager());
     }
-
 
     /**
      * test new message

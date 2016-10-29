@@ -25,4 +25,8 @@ interface IMessageProvider
      */
     public function __construct(Message $message);
 
+    /**
+     * @return Message
+     */
+    public function getMessage();
 }
