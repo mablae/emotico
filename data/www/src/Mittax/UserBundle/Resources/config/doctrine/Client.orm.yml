@@ -1,5 +1,5 @@
 # src/Mittax/UserBundle/Resources/config/doctrine/User.orm.yml
-MittaxUserBundle\Entity\Client:
+Mittax\UserBundle\Entity\Client:
     type:  entity
     table: oauth2_clients
     id:

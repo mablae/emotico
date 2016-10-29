@@ -1,5 +1,5 @@
 # src/Mittax/UserBundle/Resources/config/doctrine/User.orm.yml
-MittaxUserBundle\Entity\UserComment:
+Mittax\UserBundle\Entity\UserComment:
     type:  entity
     table: usercomments
     id:

@@ -1,5 +1,5 @@
 # src/Mittax/UserBundle/Resources/config/doctrine/User.orm.yml
-MittaxUserBundle\Entity\AccessToken:
+Mittax\UserBundle\Entity\AccessToken:
     type:  entity
     table: oauth2_access_tokens
     id:

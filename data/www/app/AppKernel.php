@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new Mittax\CoreBundle\MittaxCoreBundle(),
             new Snc\RedisBundle\SncRedisBundle(),
             new Mittax\UserBundle\MittaxUserBundle(),
+            new Mittax\MessageBundle\MittaxMessageBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

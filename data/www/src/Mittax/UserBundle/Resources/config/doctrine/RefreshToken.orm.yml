@@ -1,5 +1,5 @@
 # src/Mittax/UserBundle/Resources/config/doctrine/User.orm.yml
-MittaxUserBundle\Entity\RefreshToken:
+Mittax\UserBundle\Entity\RefreshToken:
     type:  entity
     table: oauth2_refresh_tokens
     id:

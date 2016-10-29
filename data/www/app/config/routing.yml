@@ -1,3 +1,8 @@
+mittax_message:
+    resource: "@MittaxMessageBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 mittax_user:
     resource: "@MittaxUserBundle/Controller/"
     type:     annotation

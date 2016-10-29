@@ -1,5 +1,5 @@
 # src/Mittax/UserBundle/Resources/config/doctrine/User.orm.yml
-MittaxUserBundle\Entity\AuthCode:
+Mittax\UserBundle\Entity\AuthCode:
     type:  entity
     table: oauth2_auth_codes
     id:

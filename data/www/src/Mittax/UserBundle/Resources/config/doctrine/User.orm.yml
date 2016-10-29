@@ -1,5 +1,5 @@
 # src/Mittax/UserBundle/Resources/config/doctrine/User.orm.yml
-MittaxUserBundle\Entity\User:
+Mittax\UserBundle\Entity\User:
     type:  entity
     table: users
     id:
