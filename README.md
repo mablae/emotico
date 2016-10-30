@@ -1,4 +1,4 @@
-# Emotico - A SMS / MMS / Whatsapp  Messanger Project
+# Emotico - A SMS / MMS / Whatsapp  Messenger Project
 
 ## What is this ?
 
