@@ -26,6 +26,8 @@ class AppKernel extends Kernel
             new Snc\RedisBundle\SncRedisBundle(),
             new Mittax\UserBundle\MittaxUserBundle(),
             new Mittax\MessageBundle\MittaxMessageBundle(),
+            new Vresh\TwilioBundle\VreshTwilioBundle(),
+            
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

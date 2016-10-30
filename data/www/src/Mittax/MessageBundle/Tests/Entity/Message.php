@@ -28,35 +28,12 @@ class MessageTest extends TestCase
 
         $this->assertEquals(1, $message->getId());
 
-        $message->setNamespace('a namspace');
-
-        $this->assertEquals('a namspace', $message->getNamespace());
-
         $message->setContent('some test content');
 
         $this->assertEquals('some test content', $message->getContent());
 
-        $dateTimeMock = new \DateTime();
-
-        $message->setDeletedAt($dateTimeMock);
-
-        $this->assertEquals($dateTimeMock, $message->getDeletedAt());
-
         $message->setCreatedAt(new \DateTime());
 
-        $this->assertEquals($dateTimeMock, $message->getCreatedAt());
-
-        $message->setSender(1);
-
-        $this->assertEquals(1, $message->getSender());
-
-        $message->setStatus('sended');
-
-        $this->assertEquals('sended', $message->getStatus());
-
-        $message->setRecipients('a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}');
-
-        $this->assertEquals('a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}', $message->getRecipients());
     }
 
     /**

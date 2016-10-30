@@ -72,7 +72,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
     /**
      * test getting twillo client from manager
      */
-    public function testGetClient()
+    public function _testGetClient()
     {
         $message = new Message();
 

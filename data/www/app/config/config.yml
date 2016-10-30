@@ -168,3 +168,12 @@ snc_redis:
         query_cache:
             client: doctrine
             entity_manager: default
+vresh_twilio:
+    #(Required) Your Account SID from www.twilio.com/user/account
+    sid: 'AC2cd8bede9ac01c5315b4b29b01a65d0a'
+    #(Required) Your Auth Token from www.twilio.com/user/account
+    authToken: 'bd516f42e97e932af653f21099861c5d'
+    #(Optional, default: '2010-04-01') Twilio API version
+    version: '2008-08-01'
+    #(Optional, default: 1) Number of times to retry failed requests
+    retryAttempts: 3

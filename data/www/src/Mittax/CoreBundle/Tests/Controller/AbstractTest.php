@@ -72,6 +72,15 @@ class AbstractTest extends WebTestCase
 
         $responseAsObject = \GuzzleHttp\json_decode($responseText);
 
+        if (!isset($responseAsObject->content->return)) {
+
+            var_dump($responseAsObject->content);
+
+            
+
+            die("".$this->_bundle);
+        }
+
         $id = $responseAsObject->content->return->id;
 
         /**

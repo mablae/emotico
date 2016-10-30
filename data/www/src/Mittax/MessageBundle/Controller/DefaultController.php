@@ -196,16 +196,6 @@ class DefaultController extends AbstractController
 
         $message->setCreatedAt(new \DateTime());
 
-        $message->setDeletedAt(new \DateTime());
-
-        $message->setRecipients([1,2,3]);
-
-        $message->setSender(1);
-
-        $message->setStatus('SENDED');
-
-        $message->setNamespace('Mittax\MessageBundle\Service\MessageProvider\Twillo');
-
         $response = $message->toJson($this->container->get('jms_serializer'));
 
         return new Response($response);

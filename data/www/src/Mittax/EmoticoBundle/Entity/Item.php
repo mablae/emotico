@@ -16,6 +16,7 @@ use JMS\Serializer\Annotation\Accessor;
  * @ORM\Table(name="item")
  * @ORM\Entity(repositoryClass="Mittax\EmoticoBundle\Repository\ItemRepository")
  */
+
 class Item extends EntityAbstract
 {
     /**
@@ -55,12 +56,6 @@ class Item extends EntityAbstract
      * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
-
-    /**
-     * @var \DateTime
-     * @ORM\Column(name="deletedAt", type="time")
-     */
-    private $deletedAt;
 
     /**
      * @var int
@@ -190,30 +185,6 @@ class Item extends EntityAbstract
     public function getCreatedAt()
     {
         return $this->createdAt;
-    }
-
-    /**
-     * Set deletedAt
-     *
-     * @param \DateTime $deletedAt
-     *
-     * @return Item
-     */
-    public function setDeletedAt($deletedAt)
-    {
-        $this->deletedAt = $deletedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get deletedAt
-     *
-     * @return \DateTime
-     */
-    public function getDeletedAt()
-    {
-        return $this->deletedAt;
     }
 
     /**

@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 
 require_once __DIR__. '/../../../../../../app/autoload.php';
 
-class ManagerTest extends \PHPUnit\Framework\TestCase
+class ClientTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var string
@@ -32,11 +32,9 @@ class ManagerTest extends \PHPUnit\Framework\TestCase
     /**
      * test if client has a send method
      */
-    public function testGetClientHasASendMethod()
+    public function _testGetClientHasASendMethod()
     {
         $message = new Message();
-
-        $message->setNamespace('Mittax\MessageBundle\Service\MessageProvider\Twillo');
 
         $manager = new Manager();
 
@@ -48,11 +46,15 @@ class ManagerTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException TypeError
+     * Test setting message
      */
-    public function testMissingConstructionParameter()
+    public function _testSetMessage()
     {
        $client = new \Mittax\MessageBundle\Service\MessageProvider\Twillo\Client();
+
+        $client->setMessage(new Message());
+
+        $this->assertInstanceOf(Message::class, $client->getMessage());
     }
 
     /**

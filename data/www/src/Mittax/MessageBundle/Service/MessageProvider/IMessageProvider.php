@@ -16,17 +16,19 @@ interface IMessageProvider
 
     /**
      * @return string
+     * @return IMessageProvider
      */
     public function send();
 
     /**
-     * IMessageProvider constructor.
+     * Set message.
      * @param Message $message
+     * @return IMessageProvider
      */
-    public function __construct(Message $message);
+    public function setMessage(Message $message);
 
     /**
-     * @return Message
+     * @return IMessageProvider
      */
     public function getMessage();
 }

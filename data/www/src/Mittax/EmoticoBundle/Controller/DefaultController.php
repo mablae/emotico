@@ -171,8 +171,6 @@ class DefaultController extends AbstractController
 
         $item->setCreatedAt(new \DateTime());
 
-        $item->setDeletedAt(new \DateTime());
-
         $item->setGroupid(1);
 
         $item->setUserid(1);

@@ -10,6 +10,7 @@ namespace Mittax\MessageBundle\Service;
 
 
 use Mittax\MessageBundle\Entity\Message;
+use Mittax\MessageBundle\Service\MessageProvider\IMessageProvider;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,20 +50,14 @@ class Manager
      */
     public function send()
     {
-        $response = ['success'];
 
-        return new JsonResponse($response);
     }
 
     /**
-     * @return mixed
+     * @return IMessageProvider
      */
     public function getClient()
     {
-        $nameSpace = $this->_message->getNamespace();
 
-        $clientClassName = $nameSpace . '\\Client';
-
-        return new $clientClassName($this->_message);
     }
 }

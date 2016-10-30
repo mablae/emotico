@@ -60,10 +60,6 @@ class ItemTest extends KernelTestCase
 
         $dateTimeMock = new \DateTime();
 
-        $item->setDeletedAt($dateTimeMock);
-
-        $this->assertEquals($dateTimeMock, $item->getDeletedAt());
-
         $item->setCreatedAt(new \DateTime());
 
         $this->assertEquals($dateTimeMock, $item->getCreatedAt());
@@ -105,7 +101,7 @@ class ItemTest extends KernelTestCase
             $reflectionProperty = new \ReflectionProperty(get_class(new Item()), $property->getName());
 
             $propertyAnnotations = $this->reader->getPropertyAnnotations($reflectionProperty);
-   }
+        }
 
         $this->assertNotEmpty($propertyAnnotations);
     }

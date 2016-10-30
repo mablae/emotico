@@ -15,6 +15,7 @@ use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\Serializer;
 use JMS\Serializer\SerializationContext;
+use Hateoas\HateoasBuilder;
 
 class EntityAbstract implements IEntity
 {
