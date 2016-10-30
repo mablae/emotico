@@ -13,7 +13,6 @@ use GuzzleHttp\Psr7\Request;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use PHPUnit\Framework\TestCase;
 
-
 require_once __DIR__. '/../../../../../app/autoload.php';
 
 class ClientTest extends \PHPUnit\Framework\TestCase
@@ -22,7 +21,6 @@ class ClientTest extends \PHPUnit\Framework\TestCase
      * @var string
      */
     protected $_bundle ='message';
-
 
     public function setUp()
     {

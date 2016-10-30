@@ -146,5 +146,4 @@ class DefaultControllerTest extends AbstractTest implements IControllerTest
 
         $this->assertEquals(200,$responseAsObject->status);
     }
-
 }
